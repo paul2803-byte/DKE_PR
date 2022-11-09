@@ -1,0 +1,10 @@
+:Alice a :Person ;
+    :ssn "987-65-432A" .
+
+:Bob a :Person ;
+    :ssn "123-45-6789" ;
+    :ssn "124-35-6789" .
+
+:Calvin a :Person ;
+    :birthDate "1971-07-07"^^xsd:date ;
+    :worksFor :UntypedCompany .

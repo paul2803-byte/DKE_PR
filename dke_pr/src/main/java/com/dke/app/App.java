@@ -1,11 +1,16 @@
 package com.dke.app;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.graph.Graph;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.shacl.ShaclValidator;
+import org.apache.jena.shacl.ValidationReport;
+import org.apache.jena.shacl.lib.ShLib;
 import org.opensky.api.OpenSkyApi;
 import org.opensky.model.OpenSkyStates;
 import org.opensky.model.StateVector;
+import org.apache.jena.shacl.Shapes;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -15,14 +20,16 @@ public class App
 {
     public static void main( String[] args )
     {
-        storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
+        // storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
+        testShacl();
     }
 
 
     private static Collection<StateVector> getFlights(String[] flights) {
         OpenSkyApi api = new OpenSkyApi();
+        String[] wishedFlights = new String[]{"abc0e4", "4b1900", "a9c380"};
         try {
-            return api.getStates(0, null).getStates();
+            return api.getStates(0, wishedFlights).getStates();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -46,11 +53,27 @@ public class App
                     .addProperty(model.createProperty(PROPERTY_URL + "#Heading"), String.valueOf(flight.getHeading()))
                     .addProperty(model.createProperty(PROPERTY_URL + "#Velocity"), String.valueOf(flight.getVelocity()));
 
-            model.createStatement(newFlight, model.createProperty(PROPERTY_URL +"#hasState"), newState);
-
+            model.add(model.createStatement(newFlight, model.createProperty(PROPERTY_URL +"#hasState"), newState));
         });
-
         model.write(System.out);
+        // TODO: later use this to directly validate with shacl shape
+        model.getGraph();
 
+    }
+
+    private static void testShacl() {
+        // TODO: find the place to out the shacl shapes
+        String SHAPES = "shape_graph_test.ttl";
+        String DATA = "data_graph_test.tll";
+
+        Graph shapesGraph = RDFDataMgr.loadGraph(SHAPES);
+        Graph dataGraph = RDFDataMgr.loadGraph(DATA);
+
+        Shapes shapes = Shapes.parse(shapesGraph);
+
+        ValidationReport report = ShaclValidator.get().validate(shapes, dataGraph);
+        ShLib.printReport(report);
+        System.out.println();
+        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
     }
 }

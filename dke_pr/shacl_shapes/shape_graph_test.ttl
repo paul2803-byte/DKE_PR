@@ -1,0 +1,16 @@
+:PersonShape a sh:NodeShape;
+    sh:targetClass :Person ;
+    sh:property :SsnShape, :WorksForShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+:SsnShape a sh:PropertyShape ;
+    sh:path :ssn ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^\\d{3}-\\d{2}-\\d{4}$" .
+
+:WorksForShape a sh:PropertyShape ;
+    sh:path :worksFor ;
+    sh:class :Company ;
+    sh:nodeKind sh:IRI .
