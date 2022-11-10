@@ -20,8 +20,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        // storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
-        testShacl();
+        storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
+        // testShacl();
     }
 
 
@@ -29,7 +29,7 @@ public class App
         OpenSkyApi api = new OpenSkyApi();
         String[] wishedFlights = new String[]{"abc0e4", "4b1900", "a9c380"};
         try {
-            return api.getStates(0, wishedFlights).getStates();
+            return api.getStates(0, null).getStates();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
