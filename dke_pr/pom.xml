@@ -32,12 +32,6 @@
     </dependency>
     <dependency>
       <groupId>org.apache.jena</groupId>
-      <artifactId>jena-core</artifactId>
-      <version>4.7.0-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jena</groupId>
       <artifactId>jena-arq</artifactId>
       <version>3.2.0</version>
     </dependency>
@@ -45,6 +39,11 @@
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-shacl</artifactId>
       <version>4.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.dke.app</groupId>
+      <artifactId>dke_pr</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
