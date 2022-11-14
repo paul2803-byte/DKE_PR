@@ -172,12 +172,12 @@ public class App
                     .addProperty(model.createProperty(PROPERTY_URL+"#WasBuilt"),a[11])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Engine"),a[12])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Description"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Country"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Longitude"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Latitude"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Altitude"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Heading"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Velocity"),a[13]);
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Country"),a[14])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Longitude"),a[15])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Latitude"),a[16])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Altitude"),a[17])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Heading"),a[18])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Velocity"),a[19]);
 
             Resource manufacturer= model.createResource(MANUFACTURER_URL+a[2])
                     .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerIcao"),a[2])

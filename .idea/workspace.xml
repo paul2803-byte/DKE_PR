@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/dke_pr/staticData/aircraftDatabase.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" afterDir="false" />
-    </list>
+    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +29,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/dke_pr/staticData" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15429688" />
     <property name="project.structure.side.proportion" value="0.36763006" />
@@ -74,6 +69,9 @@
       <list>
         <item itemvalue="Application.App" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -103,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668332193961</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data.">
+      <created>1668432018381</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668432018381</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +141,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="auskommentiert der versuch von dir vorher" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data." />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data." />
   </component>
 </project>
