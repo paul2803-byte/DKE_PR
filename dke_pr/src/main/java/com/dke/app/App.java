@@ -1,79 +1,73 @@
 package com.dke.app;
 
+import com.dke.app.State.MockStates;
+import com.dke.app.State.RealStates;
+import com.dke.app.State.StateService;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.riot.Lang;
-import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.ValidationReport;
 import org.apache.jena.shacl.lib.ShLib;
-import org.opensky.api.OpenSkyApi;
-import org.opensky.model.OpenSkyStates;
-import org.opensky.model.StateVector;
 import org.apache.jena.shacl.Shapes;
 
-import java.io.IOException;
 import java.util.Collection;
+import java.util.Scanner;
 
 
 public class App 
 {
     public static void main( String[] args )
     {
-        storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
-        // testShacl();
+        Scanner scanner = new Scanner(System.in);
+        // check if the states should be read through real or mock data
+        System.out.println("Should real or mock data be used? Type in m for mock or r for real: ");
+        String input = scanner.nextLine();
+        while (!input.equals("r") && !input.equals("m")) {
+            System.out.println("Not a valid option. Type in m for mock data or r for real data");
+            input = scanner.nextLine();
+        }
+        boolean mockData = input.equals("m");
+
+        // inform the user about the mode
+        if(mockData) {
+            System.out.println("Mock data gets used");
+        } else {
+            System.out.println("Real data gets used");
+        }
+
+        // read in the static data and store it to the knowledge graph
+        System.out.println("Reading the static data");
+
+
+        // let the user read in new data or terminate the application
+        askForNewStates(mockData, scanner);
     }
 
-
-    private static Collection<StateVector> getFlights(String[] flights) {
-        OpenSkyApi api = new OpenSkyApi();
-        String[] wishedFlights = new String[]{"abc0e4", "4b1900", "a9c380"};
-        try {
-            return api.getStates(0, null).getStates();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private static void askForNewStates(boolean mockData, Scanner scanner) {
+        while(true) {
+            System.out.println("Enter r to read new states or e to exit: ");
+            String input = scanner.nextLine();
+            if(input.equals("r")){
+                System.out.println("Reading new states");
+                storeStates(mockData);
+                System.out.println("New states got stored");
+            } else if (input.equals("e")){
+                System.out.println("Exiting the application");
+                break;
+            } else {
+                System.out.println("Symbol not found");
+            }
         }
     }
 
-    private static void storeFlights(Collection<StateVector> flights) {
-        Model model = ModelFactory.createDefaultModel();
-        final String FLIGHT_URL = "http://somewhere/";
-        final String STATE_URL = "http://somewhere/state/";
-        final String PROPERTY_URL = "http://somewhere/property/";
-        flights.forEach(flight -> {
-            System.out.println(flight);
-            System.out.println(flight.getIcao24());
-            Resource newFlight = model.createResource(FLIGHT_URL + flight.getIcao24())
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Country"), flight.getOriginCountry());
-
-            Resource newState = model.createResource( STATE_URL + flight.getLastPositionUpdate() + flight.getIcao24())
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Longitude"), String.valueOf(flight.getLongitude()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Latitude"), String.valueOf(flight.getLatitude()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Altitude"), String.valueOf(flight.getGeoAltitude()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Heading"), String.valueOf(flight.getHeading()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Velocity"), String.valueOf(flight.getVelocity()));
-
-            model.add(model.createStatement(newFlight, model.createProperty(PROPERTY_URL +"#hasState"), newState));
-        });
-        model.write(System.out);
-        // TODO: later use this to directly validate with shacl shape
-        model.getGraph();
-
-    }
-
-    private static void testShacl() {
-        // TODO: find the place to out the shacl shapes
-        String SHAPES = "shape_graph_test.ttl";
-        String DATA = "data_graph_test.tll";
-
-        Graph shapesGraph = RDFDataMgr.loadGraph(SHAPES);
-        Graph dataGraph = RDFDataMgr.loadGraph(DATA);
-
-        Shapes shapes = Shapes.parse(shapesGraph);
-
-        ValidationReport report = ShaclValidator.get().validate(shapes, dataGraph);
-        ShLib.printReport(report);
-        System.out.println();
-        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
+    private static void storeStates(boolean mockData){
+        StateService stateService;
+        if(mockData) {
+            stateService = new MockStates();
+        } else {
+            stateService = new RealStates();
+        }
+        StorageService.storeStates(stateService.getStates());
     }
 }
