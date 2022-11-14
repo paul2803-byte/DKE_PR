@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="target">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../opensky-api/java/target/opensky-api-1.3.0.jar!/" />
+      <root url="file://$PROJECT_DIR$/../opensky-api/java/target" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../opensky-api/java/target/opensky-api-1.3.0-sources.jar!/" />
+      <root url="file://$PROJECT_DIR$/../opensky-api/java/target" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../opensky-api/java/target" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../opensky-api/java/target" recursive="false" type="SOURCES" />
+  </library>
+</component>

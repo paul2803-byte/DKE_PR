@@ -1,5 +1,7 @@
 package com.dke.app;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.rdf.model.*;
@@ -8,24 +10,78 @@ import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.ValidationReport;
 import org.apache.jena.shacl.lib.ShLib;
 import org.opensky.api.OpenSkyApi;
-import org.opensky.model.OpenSkyStates;
 import org.opensky.model.StateVector;
 import org.apache.jena.shacl.Shapes;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class App 
 {
     public static void main( String[] args )
     {
-        storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
+        List<String[]> staticData= getStaticData();
+        //storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
+
+        storeFlights(getDataList(getDynamicData(new String[]{"4b1815", "4b1817"}), getStaticData()));
+
+
         // testShacl();
     }
 
+    private static List<String[]> getDataList(Collection<StateVector> dynamicData, List<String[]> staticData){
+        List<String[]> flightsList = new ArrayList<>();
 
-    private static Collection<StateVector> getFlights(String[] flights) {
+        dynamicData.forEach(flight -> {
+            flightsList.add(new String[]{flight.getIcao24(),flight.getOriginCountry(),String.valueOf(flight.getLongitude()),
+                                String.valueOf(flight.getLatitude()),String.valueOf(flight.getGeoAltitude()),
+                                String.valueOf(flight.getHeading()),String.valueOf(flight.getVelocity())});
+        });
+
+        List<String[]> staticAndDynamicFlightData= new ArrayList<>();
+        List<String[]> staticFlights=staticData;
+        for(String [] a : staticFlights){
+            boolean alreadyAssigned=false;
+            String icao= a[0];
+            for(String [] i : flightsList){
+                if(i[0].equals(icao)){
+                    int length= a.length+(i.length-1);
+                    String[] data = new String[length];
+                    for(int j=0; j< a.length; j++ ){
+                        data[j]=a[j];
+                    }
+                    for(int j=0; j<i.length-1; j++){
+                        data[a.length+j]=i[j+1];
+                    }
+                    staticAndDynamicFlightData.add(data);
+                    alreadyAssigned=true;
+                    break;
+                }
+            }
+            if(!alreadyAssigned){
+                int length= a.length+(flightsList.get(0).length-1);
+                String[] data = new String[length];
+                for(int j=0; j< length; j++ ){
+                    if(j<a.length){
+                        data[j]=a[j];
+                    }
+                    else{
+                        data[j]=""; //keine Ahnung ob "null" besser wäre
+                    }
+                }
+                staticAndDynamicFlightData.add(data);
+            }
+        }
+
+        return staticAndDynamicFlightData;
+    }
+
+    private static Collection<StateVector> getDynamicData(String[] flights) {
         OpenSkyApi api = new OpenSkyApi();
         String[] wishedFlights = new String[]{"abc0e4", "4b1900", "a9c380"};
         try {
@@ -33,6 +89,41 @@ public class App
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static List<String[]> getStaticData(){
+        List<String[]> r = new LinkedList<>();
+        try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))){
+            while(reader.readNext()!=null){
+                String[] i = reader.readNext();
+                if(i != null){
+                    if(i[1]!= null){
+                        if(i[1].length()!=0){
+                            if(/*i[1].charAt(0)=='D'||*/(i[1].charAt(0)=='O'&& i[1].charAt(1)=='E')||(i[1].charAt(0)=='C'&&i[1].charAt(1)=='H')){
+                                //r.add(i);
+                                String[] values = new String[14];
+                                for(int j=0; j<7; j++){
+                                    values[j]=i[j];
+                                }
+                                values[7]=i[8];
+                                values[8]=i[13];
+                                values[9]=i[15];
+                                values[10]=i[16];
+                                values[11]=i[18];
+                                values[12]=i[21];
+                                values[13]=i[26];
+                                r.add(values);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
+        return r;
     }
 
     private static void storeFlights(Collection<StateVector> flights) {
@@ -60,6 +151,45 @@ public class App
         model.getGraph();
 
     }
+
+    private static void storeFlights(List<String[]> r){
+        Model model = ModelFactory.createDefaultModel();
+        final String PROPERTY_URL= "http://www.dke.uni-linz.ac.at/pr-dke/";
+        final String AIRCRAFT_URL= "http://www.dke.uni-linz.ac.at/pr-dke/aircraft/";
+        final String MANUFACTURER_URL= "http://www.dke.uni-linz.ac.at/pr-dke/manufacturer/";
+        for(String[] a : r)
+        {
+            Resource airplane = model.createResource(AIRCRAFT_URL+a[0])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Icao24"),a[0])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Registration"),a[1])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Model"),a[4])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Typecode"),a[5])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Serialnumber"),a[6])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#IcaoAircraftType"),a[7])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Owner"), a[8])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#RegisteredSince"),a[9])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Reguntil"),a[10])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#WasBuilt"),a[11])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Engine"),a[12])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Description"),a[13])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Country"),a[13])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Longitude"),a[13])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Latitude"),a[13])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Altitude"),a[13])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Heading"),a[13])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Velocity"),a[13]);
+
+            Resource manufacturer= model.createResource(MANUFACTURER_URL+a[2])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerIcao"),a[2])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerName"),a[3]);
+
+            model.add(model.createStatement(airplane, model.createProperty(PROPERTY_URL+"#hasManufacturer"),manufacturer));
+        }
+        //model.write(System.out, "Turtle");
+        model.write(System.out);
+    }
+
+
 
     private static void testShacl() {
         // TODO: find the place to out the shacl shapes
