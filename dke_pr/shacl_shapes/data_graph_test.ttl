@@ -1,10 +1,12 @@
-:Alice a :Person ;
-    :ssn "987-65-432A" .
+@prefix ex: <http://www.w3.org/2022/example#> .
 
-:Bob a :Person ;
-    :ssn "123-45-6789" ;
-    :ssn "124-35-6789" .
+ex:Alice a ex:Person ;
+    ex:ssn "987-65-432A" .
 
-:Calvin a :Person ;
-    :birthDate "1971-07-07"^^xsd:date ;
-    :worksFor :UntypedCompany .
+ex:Bob a ex:Person ;
+    ex:ssn "123-45-6789" ;
+    ex:ssn "124-35-6789" .
+
+ex:Calvin a ex:Person ;
+    ex:birthDate "1971-07-07"^^xsd:date ;
+    ex:worksFor ex:UntypedCompany .

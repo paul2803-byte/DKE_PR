@@ -1,72 +1,28 @@
-ex:FlightShape a sh:NodeShape;
-	sh:targetClass ex:Flight;
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix property: <http://wwww.somewhere/property#> .
+@prefix type: <http://www.somewhere/type#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ex:FlightShape a sh:NodeShape ;
+	sh:targetClass "http://www.somewhere/type#Flight" ;
 	sh:closed true ;
-	sh:property :Icao24Shape, :CountryShape ;
 	sh:property [
-		sh:path :status;
-		sh:node :StatusShape ].
-
-ex:Icao24Shape a sh:PropertyShape ;
-	sh:path :icao24 ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:dataType xsd:string ;
-	sh:length 6 .
-
-ex:CountryShape a sh:PropertyShape ;
-	sh:path ex:country ;
-	sh:maxCount :1 ;
-	sh:dataType xsd:string .
-
-ex:StatusShape a sh:NodeShape;
-	sh:targetClass: ex:Status ;
-	sh:closed: true ;
-	sh:property :TimeShape,
-		:LongitudeShape,
-		:LatitudeShape,
-		:AltitudeShape,
-		:OnGroundShape,
-		:ValocityShape,
-		:TrueTrackShape,
-		:VerticalRateShape.
-
-ex:TimeShape a sh:PropertyShape ;
-	sh:path ex:time ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:dataType xsd:float .
-
-ex:LongitudeShape a sh:PropertyShape ;
-	sh:path ex:longitude ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:LatitudeShape a sh:PropertyShape ;
-	sh:path ex:latitude ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:AltitudeShape a sh:PropertyShape ;
-	sh:path ex:altitude ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:OnGroundShape a sh:PropertyShape ;
-	sh:path ex:onGround ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:boolean .
-
-ex:ValocityShape a sh:PropertyShape ;
-	sh:path  ex:valocity ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:TrueTrackShape a sh:PropertyShape ;
-	sh:path ex:trueTrack ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:VerticalRateShape a sh:PropertyShape ;
-	sh:path ex:verticalRateShape ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
+	    sh:path rdf:type ;
+	] ;
+	sh:property [
+	    sh:path property:Icao24 ;
+	    sh:maxCount 1 ;
+        sh:minCount 2 ;
+        sh:dataType xsd:string ;
+        sh:length 3;
+    ] ;
+    sh:property [
+        sh:path property:Country ;
+    	sh:maxCount 1 ;
+    	sh:dataType xsd:string ;
+    ] ;
+    sh:property [
+        sh:path property:HasState ;
+        sh:dataType "http://www.w3.org/2022/example#State" ] .

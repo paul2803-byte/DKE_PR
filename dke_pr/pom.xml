@@ -41,6 +41,15 @@
       <artifactId>jena-shacl</artifactId>
       <version>4.3.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.jena</groupId>
+      <artifactId>jena-rdfconnection</artifactId>
+      <version>4.3.0</version>
+    </dependency>
+    <!-- Thanks for using https://jar-download.com -->
+
+    <!-- Thanks for using https://jar-download.com -->
+
   </dependencies>
 
   <build>

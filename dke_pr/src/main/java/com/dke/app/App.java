@@ -3,17 +3,8 @@ package com.dke.app;
 import com.dke.app.State.MockStates;
 import com.dke.app.State.RealStates;
 import com.dke.app.State.StateService;
-import org.apache.jena.graph.Graph;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.shacl.ShaclValidator;
-import org.apache.jena.shacl.ValidationReport;
-import org.apache.jena.shacl.lib.ShLib;
-import org.apache.jena.shacl.Shapes;
 
-import java.util.Collection;
 import java.util.Scanner;
-
 
 public class App 
 {
