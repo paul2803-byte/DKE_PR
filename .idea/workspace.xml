@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="small fixes">
+    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="starting to implement creation of static data">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dke_pr/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +39,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15429688" />
@@ -120,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668432295362</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="starting to implement creation of static data">
+      <created>1668696701660</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668696701660</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +169,7 @@
     <MESSAGE value="." />
     <MESSAGE value="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data." />
     <MESSAGE value="small fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="small fixes" />
+    <MESSAGE value="starting to implement creation of static data" />
+    <option name="LAST_COMMIT_MESSAGE" value="starting to implement creation of static data" />
   </component>
 </project>

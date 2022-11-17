@@ -5,7 +5,6 @@ import com.opencsv.exceptions.CsvException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -15,13 +14,13 @@ import java.util.stream.Collectors;
 public class AircraftService {
     private static final String EX_URL = "http://www.dke.uni-linz.ac.at/pr-dke/";
 
-    public List<Model> getAircrafts() {
+    public static List<Model> getAircrafts() {
         // getting a list of state vectors depending on the implementation in the concrete class
         return getStaticData().stream()
                 // convert each element in the stream to a graph
                 .map(AircraftService::storeFlights)
                 // validate each element in the stream with the shacl shape and only use return the valid ones
-                .filter(ValidationService::validateState)
+                // .filter(ValidationService::validateState)
                 // convert stream to list
                 .collect(Collectors.toList());
     }
