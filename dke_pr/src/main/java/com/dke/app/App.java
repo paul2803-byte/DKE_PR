@@ -35,10 +35,10 @@ public class App
     }
 
     private static List<String[]> getDataList(Collection<StateVector> dynamicData, List<String[]> staticData){
-        List<String[]> flightsList = new ArrayList<>();
+        List<String[]> dynamicDataList = new ArrayList<>();
 
         dynamicData.forEach(flight -> {
-            flightsList.add(new String[]{flight.getIcao24(),flight.getOriginCountry(),String.valueOf(flight.getLongitude()),
+            dynamicDataList.add(new String[]{flight.getIcao24(),flight.getOriginCountry(),String.valueOf(flight.getLongitude()),
                                 String.valueOf(flight.getLatitude()),String.valueOf(flight.getGeoAltitude()),
                                 String.valueOf(flight.getHeading()),String.valueOf(flight.getVelocity())});
         });
@@ -48,7 +48,7 @@ public class App
         for(String [] a : staticFlights){
             boolean alreadyAssigned=false;
             String icao= a[0];
-            for(String [] i : flightsList){
+            for(String [] i : dynamicDataList){
                 if(i[0].equals(icao)){
                     int length= a.length+(i.length-1);
                     String[] data = new String[length];
@@ -64,7 +64,7 @@ public class App
                 }
             }
             if(!alreadyAssigned){
-                int length= a.length+(flightsList.get(0).length-1);
+                int length= a.length+(dynamicDataList.get(0).length-1);
                 String[] data = new String[length];
                 for(int j=0; j< length; j++ ){
                     if(j<a.length){
@@ -177,13 +177,16 @@ public class App
                     .addProperty(model.createProperty(PROPERTY_URL+"#Latitude"),a[16])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Altitude"),a[17])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Heading"),a[18])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Velocity"),a[19]);
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Velocity"),a[19])
+                    .addProperty(model.createProperty(PROPERTY_URL+"#Manufacturer"),model.createResource(MANUFACTURER_URL+a[2])
+                            .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerIcao"),a[2])
+                            .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerName"),a[3]));
 
-            Resource manufacturer= model.createResource(MANUFACTURER_URL+a[2])
+            /*Resource manufacturer= model.createResource(MANUFACTURER_URL+a[2])
                     .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerIcao"),a[2])
                     .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerName"),a[3]);
 
-            model.add(model.createStatement(airplane, model.createProperty(PROPERTY_URL+"#hasManufacturer"),manufacturer));
+            model.add(model.createStatement(airplane, model.createProperty(PROPERTY_URL+"#Manufacturer"),manufacturer));*/
         }
         //model.write(System.out, "Turtle");
         model.write(System.out);
