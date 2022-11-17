@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="auskommentiert der versuch von dir vorher">
+    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="starting to implement creation of static data">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,17 +21,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
   </component>
   <component name="ProjectId" id="2GqUKm6jCsL6AL5iwcUnZT4tSNV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -33,11 +39,17 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../opensky-api/java/target/opensky-api-1.3.0.jar" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15429688" />
     <property name="project.structure.side.proportion" value="0.36763006" />
-    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jandu\Documents\Uni\Wirtschaftsinformatik\Semester 5\PR Data &amp; Knowledge Engineering\github repo\dke_pr\staticData" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -67,6 +79,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -90,7 +106,35 @@
       <option name="project" value="LOCAL" />
       <updated>1668083360927</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary=".">
+      <created>1668332193961</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668332193961</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data.">
+      <created>1668432018381</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668432018381</updated>
+    </task>
+    <task id="LOCAL-00004" summary="small fixes">
+      <created>1668432295362</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668432295362</updated>
+    </task>
+    <task id="LOCAL-00005" summary="starting to implement creation of static data">
+      <created>1668696701660</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668696701660</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,7 +145,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="static_Data" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -110,6 +166,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="auskommentiert der versuch von dir vorher" />
-    <option name="LAST_COMMIT_MESSAGE" value="auskommentiert der versuch von dir vorher" />
+    <MESSAGE value="." />
+    <MESSAGE value="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data." />
+    <MESSAGE value="small fixes" />
+    <MESSAGE value="starting to implement creation of static data" />
+    <option name="LAST_COMMIT_MESSAGE" value="starting to implement creation of static data" />
   </component>
 </project>
