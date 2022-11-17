@@ -3,13 +3,11 @@ package com.dke.app;
 import com.dke.app.State.MockStates;
 import com.dke.app.State.RealStates;
 import com.dke.app.State.StateService;
-
 import java.util.Scanner;
 
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
         // check if the states should be read through real or mock data
         System.out.print("Should real or mock data be used? Type in m for mock or r for real: ");
@@ -21,7 +19,7 @@ public class App
         boolean mockData = input.equals("m");
 
         // inform the user about the mode
-        if(mockData) {
+        if (mockData) {
             System.out.println("Mock data gets used");
         } else {
             System.out.println("Real data gets used");
@@ -29,11 +27,13 @@ public class App
 
         // read in the static data and store it to the knowledge graph
         System.out.println("Reading the static data");
+        // TODO: store static data
+        StorageService.storeAircrafts(AircraftService.getAircrafts());
 
-
-        // let the user read in new data or terminate the application
         askForNewStates(mockData, scanner);
     }
+
+
 
     private static void askForNewStates(boolean mockData, Scanner scanner) {
         while(true) {
@@ -52,13 +52,33 @@ public class App
         }
     }
 
-    private static void storeStates(boolean mockData){
+    private static void storeStates(boolean mockData) {
         StateService stateService;
-        if(mockData) {
+        if (mockData) {
             stateService = new MockStates();
         } else {
             stateService = new RealStates();
         }
         StorageService.storeStates(stateService.getStates());
     }
+
+
+
+
+
+    /*private static void testShacl() {
+        // TODO: find the place to out the shacl shapes
+        String SHAPES = "shape_graph_test.ttl";
+        String DATA = "data_graph_test.tll";
+
+        Graph shapesGraph = RDFDataMgr.loadGraph(SHAPES);
+        Graph dataGraph = RDFDataMgr.loadGraph(DATA);
+
+        Shapes shapes = Shapes.parse(shapesGraph);
+
+        ValidationReport report = ShaclValidator.get().validate(shapes, dataGraph);
+        ShLib.printReport(report);
+        System.out.println();
+        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
+    }*/
 }

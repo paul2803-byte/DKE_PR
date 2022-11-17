@@ -7,12 +7,11 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
 import org.apache.jena.shacl.ValidationReport;
-import org.apache.jena.shacl.lib.ShLib;
 
 public class ValidationService {
 
     public static boolean validateState(Model stateModel) {
-        String SHAPE = "shacl_shapes/flight_shacl.ttl";
+        String SHAPE = "dke_pr/shacl_shapes/state_shape_graph.ttl";
         Graph shapesGraph = RDFDataMgr.loadGraph(SHAPE);
         // TODO: check why type of state gets not checked
 
