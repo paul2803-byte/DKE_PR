@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 
 public abstract class StateService {
 
+    static final String FLIGHT_URL = "http://www.w3.org/flight#";
+    static final String EX_URL = "http://www.w3.org/2022/example#";
+    static final String STATE_URL = "http://www.w3.org/state#";
     protected abstract Collection<StateVector> getStateVectors();
 
     public List<Model> getStates() {
@@ -37,30 +40,40 @@ public abstract class StateService {
         // TODO: check how the composition of state and aircraft is working --> state gets added to the aircraft
         Model model = ModelFactory.createDefaultModel();
 
-        Map<String, String> prefixes = new HashMap<>();
-
-        final String TYPE_URL = "http://www.somewhere/type#";
-        final String FLIGHT_URL = "http://www.somewhere/flight#";
-        final String STATE_URL = "http://www.somewhere/state#";
-        final String PROPERTY_URL = "http://wwww.somewhere/property#";
-        model.setNsPrefix("flight", FLIGHT_URL);
-        model.setNsPrefix("property", PROPERTY_URL);
+        model.setNsPrefix("ex", "http://www.w3.org/2022/example#");
+        model.setNsPrefix("state", "http://www.w3.org/state#");
+        model.setNsPrefix("flight", "http://www.w3.org/flight#");
         model.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 
         Resource newFlight = model.createResource(FLIGHT_URL + state.getIcao24())
-                .addProperty(RDF.type, TYPE_URL + "Flight")
-                .addProperty(model.createProperty(PROPERTY_URL + "Country"), state.getOriginCountry())
-                .addProperty(model.createProperty(PROPERTY_URL + "Icao24"), state.getIcao24());
+                .addProperty(RDF.type, model.createProperty(EX_URL + "Flight"));
+        // set the property through method call -> only adds a new value if its not null
+        setProperty(newFlight, model, "Country", state.getOriginCountry());
+        setProperty(newFlight, model, "Icao24", state.getIcao24());
 
         Resource newState = model.createResource( STATE_URL + state.getLastPositionUpdate() + state.getIcao24())
-                .addProperty(RDF.type, TYPE_URL+"State")
-                .addProperty(model.createProperty(PROPERTY_URL + "Longitude"), String.valueOf(state.getLongitude()))
-                .addProperty(model.createProperty(PROPERTY_URL + "Latitude"), String.valueOf(state.getLatitude()))
-                .addProperty(model.createProperty(PROPERTY_URL + "Altitude"), String.valueOf(state.getGeoAltitude()))
-                .addProperty(model.createProperty(PROPERTY_URL + "Heading"), String.valueOf(state.getHeading()))
-                .addProperty(model.createProperty(PROPERTY_URL + "Velocity"), String.valueOf(state.getVelocity()));
-        model.add(model.createStatement(newFlight, model.createProperty(PROPERTY_URL +"HasState"), newState));
+                .addProperty(RDF.type, model.createProperty(EX_URL+"State"));
+        setProperty(newState, model, "Icao24", state.getIcao24());
+        setProperty(newState, model, "Time", String.valueOf(state.getLastPositionUpdate()));
+        setProperty(newState, model, "Longitude", String.valueOf(state.getLongitude()));
+        setProperty(newState, model, "Latitude", String.valueOf(state.getLatitude()));
+        setProperty(newState, model, "AltitudeGeo", String.valueOf(state.getGeoAltitude()));
+        setProperty(newState, model, "AltitudeBaro", String.valueOf(state.getBaroAltitude()));
+        setProperty(newState, model, "OnGround", String.valueOf(state.isOnGround()));
+        setProperty(newState, model, "Heading", String.valueOf(state.getHeading()));
+        setProperty(newState, model, "VerticalRateShape", String.valueOf(state.getVerticalRate()));
+        setProperty(newState, model, "Velocity", String.valueOf(state.getVelocity()));
+        model.add(model.createStatement(newFlight, model.createProperty(EX_URL +"HasState"), newState));
 
         return model;
+    }
+
+    private void setProperty(Resource resource, Model model, String name, String value) {
+        if(value != null && !value.equals("") && !value.equals("null")) {
+            resource.addProperty(
+                    model.createProperty(EX_URL + name),
+                    value
+            );
+        }
     }
 }

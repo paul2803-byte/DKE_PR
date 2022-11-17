@@ -9,24 +9,24 @@ import org.apache.jena.shacl.Shapes;
 import org.apache.jena.shacl.ValidationReport;
 import org.apache.jena.shacl.lib.ShLib;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 public class ValidationService {
 
     public static boolean validateState(Model stateModel) {
-        // TODO: implement validation with the shacl shape
         String SHAPE = "shacl_shapes/flight_shacl.ttl";
-        System.out.println(stateModel.getGraph());
         Graph shapesGraph = RDFDataMgr.loadGraph(SHAPE);
-        System.out.println(shapesGraph);
+        // TODO: check why type of state gets not checked
 
         Shapes shapes = Shapes.parse(shapesGraph);
         ValidationReport report = ShaclValidator.get().validate(shapes, stateModel.getGraph());
-        ShLib.printReport(report);
-        System.out.println();
-        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
-        return true;
+
+        boolean valid = report.conforms();
+        if(valid) {
+            return true;
+        } else {
+            // log the result to console if the model is invalid
+            RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
+            return false;
+        }
     }
 
     public static boolean validateAircraft(Graph aircraftGraph) {

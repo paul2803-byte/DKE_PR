@@ -20,7 +20,7 @@ public class StorageService {
 
     private static void storeState(Model state) {
         // TODO: implement the storage of a state
-        RDFConnection.connect(SERVER).load(state);
+        // RDFConnection.connect(SERVER).load(state);
 
     }
 }

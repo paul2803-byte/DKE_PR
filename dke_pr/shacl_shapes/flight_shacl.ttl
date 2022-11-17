@@ -1,28 +1,85 @@
 @prefix sh:	<http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <http://www.w3.org/2022/example#> .
-@prefix property: <http://wwww.somewhere/property#> .
-@prefix type: <http://www.somewhere/type#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 ex:FlightShape a sh:NodeShape ;
-	sh:targetClass "http://www.somewhere/type#Flight" ;
+	sh:targetClass ex:Flight;
 	sh:closed true ;
 	sh:property [
 	    sh:path rdf:type ;
 	] ;
 	sh:property [
-	    sh:path property:Icao24 ;
+	    sh:path ex:Icao24 ;
 	    sh:maxCount 1 ;
-        sh:minCount 2 ;
+        sh:minCount 1 ;
         sh:dataType xsd:string ;
-        sh:length 3;
+        sh:length 6;
     ] ;
     sh:property [
-        sh:path property:Country ;
+        sh:path ex:Country ;
     	sh:maxCount 1 ;
     	sh:dataType xsd:string ;
     ] ;
     sh:property [
-        sh:path property:HasState ;
-        sh:dataType "http://www.w3.org/2022/example#State" ] .
+        sh:path ex:HasState ;
+        sh:dataType ex:State ] .
+
+ex:StateShape a sh:NodeShape ;
+    sh:targetClass ex:State ;
+    sh:closed true;
+    sh:property [
+        sh:path rdf:type
+    ] ;
+    sh:property [
+        sh:path ex:Icao24 ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType xsd:string ;
+        sh:length 6
+    ] ;
+    sh:property [
+        sh:path ex:Time ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:Longitude ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:Latitude ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:AltitudeGeo ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:AltitudeBaro ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:OnGround ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:boolean ;
+    ] ;
+    sh:property [
+        sh:path ex:Velocity ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:Heading ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:VerticalRateShape ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] .

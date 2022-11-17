@@ -12,10 +12,10 @@ public class App
     {
         Scanner scanner = new Scanner(System.in);
         // check if the states should be read through real or mock data
-        System.out.println("Should real or mock data be used? Type in m for mock or r for real: ");
+        System.out.print("Should real or mock data be used? Type in m for mock or r for real: ");
         String input = scanner.nextLine();
         while (!input.equals("r") && !input.equals("m")) {
-            System.out.println("Not a valid option. Type in m for mock data or r for real data");
+            System.out.print("Not a valid option. Type in m for mock data or r for real data: ");
             input = scanner.nextLine();
         }
         boolean mockData = input.equals("m");
@@ -37,7 +37,7 @@ public class App
 
     private static void askForNewStates(boolean mockData, Scanner scanner) {
         while(true) {
-            System.out.println("Enter r to read new states or e to exit: ");
+            System.out.print("Enter r to read new states or e to exit: ");
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
