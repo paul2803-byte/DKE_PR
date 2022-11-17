@@ -1,72 +1,85 @@
-ex:FlightShape a sh:NodeShape;
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ex:FlightShape a sh:NodeShape ;
 	sh:targetClass ex:Flight;
 	sh:closed true ;
-	sh:property :Icao24Shape, :CountryShape ;
 	sh:property [
-		sh:path :status;
-		sh:node :StatusShape ].
+	    sh:path rdf:type ;
+	] ;
+	sh:property [
+	    sh:path ex:Icao24 ;
+	    sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType xsd:string ;
+        sh:length 6;
+    ] ;
+    sh:property [
+        sh:path ex:Country ;
+    	sh:maxCount 1 ;
+    	sh:dataType xsd:string ;
+    ] ;
+    sh:property [
+        sh:path ex:HasState ;
+        sh:dataType ex:State ] .
 
-ex:Icao24Shape a sh:PropertyShape ;
-	sh:path :icao24 ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:dataType xsd:string ;
-	sh:length 6 .
-
-ex:CountryShape a sh:PropertyShape ;
-	sh:path ex:country ;
-	sh:maxCount :1 ;
-	sh:dataType xsd:string .
-
-ex:StatusShape a sh:NodeShape;
-	sh:targetClass: ex:Status ;
-	sh:closed: true ;
-	sh:property :TimeShape,
-		:LongitudeShape,
-		:LatitudeShape,
-		:AltitudeShape,
-		:OnGroundShape,
-		:ValocityShape,
-		:TrueTrackShape,
-		:VerticalRateShape.
-
-ex:TimeShape a sh:PropertyShape ;
-	sh:path ex:time ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:dataType xsd:float .
-
-ex:LongitudeShape a sh:PropertyShape ;
-	sh:path ex:longitude ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:LatitudeShape a sh:PropertyShape ;
-	sh:path ex:latitude ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:AltitudeShape a sh:PropertyShape ;
-	sh:path ex:altitude ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:OnGroundShape a sh:PropertyShape ;
-	sh:path ex:onGround ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:boolean .
-
-ex:ValocityShape a sh:PropertyShape ;
-	sh:path  ex:valocity ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:TrueTrackShape a sh:PropertyShape ;
-	sh:path ex:trueTrack ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
-
-ex:VerticalRateShape a sh:PropertyShape ;
-	sh:path ex:verticalRateShape ;
-	sh:maxCount 1 ;
-	sh:dataType xsd:float .
+ex:StateShape a sh:NodeShape ;
+    sh:targetClass ex:State ;
+    sh:closed true;
+    sh:property [
+        sh:path rdf:type
+    ] ;
+    sh:property [
+        sh:path ex:Icao24 ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType xsd:string ;
+        sh:length 6
+    ] ;
+    sh:property [
+        sh:path ex:Time ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:Longitude ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:Latitude ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:AltitudeGeo ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:AltitudeBaro ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:OnGround ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:boolean ;
+    ] ;
+    sh:property [
+        sh:path ex:Velocity ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:Heading ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path ex:VerticalRateShape ;
+        sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] .

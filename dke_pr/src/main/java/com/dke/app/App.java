@@ -1,5 +1,8 @@
 package com.dke.app;
 
+import com.dke.app.State.MockStates;
+import com.dke.app.State.RealStates;
+import com.dke.app.State.StateService;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.apache.jena.graph.Graph;
@@ -20,77 +23,31 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import java.util.Scanner;
 
 public class App 
 {
     public static void main( String[] args )
     {
-        List<String[]> staticData= getStaticData();
-        //storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
+        Scanner scanner = new Scanner(System.in);
+        // check if the states should be read through real or mock data
+        System.out.print("Should real or mock data be used? Type in m for mock or r for real: ");
+        String input = scanner.nextLine();
+        while (!input.equals("r") && !input.equals("m")) {
+            System.out.print("Not a valid option. Type in m for mock data or r for real data: ");
+            input = scanner.nextLine();
+        }
+        boolean mockData = input.equals("m");
 
-        //storeFlights(getDataList(getDynamicData(new String[]{"4b1815", "4b1817"}), getStaticData()));
-
-
-        // testShacl();
-    }
-
-    private static List<String[]> getDataList(Collection<StateVector> dynamicData, List<String[]> staticData){
-        List<String[]> dynamicDataList = new ArrayList<>();
-
-        dynamicData.forEach(flight -> {
-            dynamicDataList.add(new String[]{flight.getIcao24(),flight.getOriginCountry(),String.valueOf(flight.getLongitude()),
-                                String.valueOf(flight.getLatitude()),String.valueOf(flight.getGeoAltitude()),
-                                String.valueOf(flight.getHeading()),String.valueOf(flight.getVelocity())});
-        });
-
-        List<String[]> staticAndDynamicFlightData= new ArrayList<>();
-        List<String[]> staticFlights=staticData;
-        for(String [] a : staticFlights){
-            boolean alreadyAssigned=false;
-            String icao= a[0];
-            for(String [] i : dynamicDataList){
-                if(i[0].equals(icao)){
-                    int length= a.length+(i.length-1);
-                    String[] data = new String[length];
-                    for(int j=0; j< a.length; j++ ){
-                        data[j]=a[j];
-                    }
-                    for(int j=0; j<i.length-1; j++){
-                        data[a.length+j]=i[j+1];
-                    }
-                    staticAndDynamicFlightData.add(data);
-                    alreadyAssigned=true;
-                    break;
-                }
-            }
-            if(!alreadyAssigned){
-                int length= a.length+(dynamicDataList.get(0).length-1);
-                String[] data = new String[length];
-                for(int j=0; j< length; j++ ){
-                    if(j<a.length){
-                        data[j]=a[j];
-                    }
-                    else{
-                        data[j]=""; //keine Ahnung ob "null" besser wäre
-                    }
-                }
-                staticAndDynamicFlightData.add(data);
-            }
+        // inform the user about the mode
+        if(mockData) {
+            System.out.println("Mock data gets used");
+        } else {
+            System.out.println("Real data gets used");
         }
 
-        return staticAndDynamicFlightData;
-    }
-
-    private static Collection<StateVector> getDynamicData(String[] flights) {
-        OpenSkyApi api = new OpenSkyApi();
-        String[] wishedFlights = new String[]{"abc0e4", "4b1900", "a9c380"};
-        try {
-            return api.getStates(0, null).getStates();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+        // read in the static data and store it to the knowledge graph
+        System.out.println("Reading the static data");
     private static List<String[]> getStaticData(){
         List<String[]> r = new LinkedList<>();
         try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))){
@@ -137,21 +94,36 @@ public class App
             Resource newFlight = model.createResource(FLIGHT_URL + flight.getIcao24())
                     .addProperty(model.createProperty(PROPERTY_URL + "#Country"), flight.getOriginCountry());
 
-            Resource newState = model.createResource( STATE_URL + flight.getLastPositionUpdate() + flight.getIcao24())
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Longitude"), String.valueOf(flight.getLongitude()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Latitude"), String.valueOf(flight.getLatitude()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Altitude"), String.valueOf(flight.getGeoAltitude()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Heading"), String.valueOf(flight.getHeading()))
-                    .addProperty(model.createProperty(PROPERTY_URL + "#Velocity"), String.valueOf(flight.getVelocity()));
 
-            model.add(model.createStatement(newFlight, model.createProperty(PROPERTY_URL +"#hasState"), newState));
-        });
-        model.write(System.out);
-        // TODO: later use this to directly validate with shacl shape
-        model.getGraph();
-
+        // let the user read in new data or terminate the application
+        askForNewStates(mockData, scanner);
     }
 
+    private static void askForNewStates(boolean mockData, Scanner scanner) {
+        while(true) {
+            System.out.print("Enter r to read new states or e to exit: ");
+            String input = scanner.nextLine();
+            if(input.equals("r")){
+                System.out.println("Reading new states");
+                storeStates(mockData);
+                System.out.println("New states got stored");
+            } else if (input.equals("e")){
+                System.out.println("Exiting the application");
+                break;
+            } else {
+                System.out.println("Symbol not found");
+            }
+        }
+    }
+
+    private static void storeStates(boolean mockData){
+        StateService stateService;
+        if(mockData) {
+            stateService = new MockStates();
+        } else {
+            stateService = new RealStates();
+        }
+        StorageService.storeStates(stateService.getStates());
     private static void storeFlights(List<String[]> r){
         Model model = ModelFactory.createDefaultModel();
         final String PROPERTY_URL= "http://www.dke.uni-linz.ac.at/pr-dke/";

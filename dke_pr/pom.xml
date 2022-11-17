@@ -37,7 +37,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.jena</groupId>
-      <artifactId>jena-shacl</artifactId>
+      <artifactId>jena-rdfconnection</artifactId>
       <version>4.3.0</version>
     </dependency>
     <dependency>
