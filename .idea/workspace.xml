@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="small fixes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/dke_pr.iml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/dke_pr.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,13 +24,6 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
   </component>
   <component name="ProjectId" id="2GqUKm6jCsL6AL5iwcUnZT4tSNV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
