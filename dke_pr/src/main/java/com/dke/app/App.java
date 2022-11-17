@@ -28,7 +28,7 @@ public class App
         List<String[]> staticData= getStaticData();
         //storeFlights(getFlights(new String[]{"4b1815", "4b1817"}));
 
-        storeFlights(getDataList(getDynamicData(new String[]{"4b1815", "4b1817"}), getStaticData()));
+        //storeFlights(getDataList(getDynamicData(new String[]{"4b1815", "4b1817"}), getStaticData()));
 
 
         // testShacl();
@@ -172,12 +172,6 @@ public class App
                     .addProperty(model.createProperty(PROPERTY_URL+"#WasBuilt"),a[11])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Engine"),a[12])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Description"),a[13])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Country"),a[14])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Longitude"),a[15])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Latitude"),a[16])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Altitude"),a[17])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Heading"),a[18])
-                    .addProperty(model.createProperty(PROPERTY_URL+"#Velocity"),a[19])
                     .addProperty(model.createProperty(PROPERTY_URL+"#Manufacturer"),model.createResource(MANUFACTURER_URL+a[2])
                             .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerIcao"),a[2])
                             .addProperty(model.createProperty(PROPERTY_URL+"#ManufacturerName"),a[3]));
