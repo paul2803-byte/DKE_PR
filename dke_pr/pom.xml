@@ -33,12 +33,7 @@
     <dependency>
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-arq</artifactId>
-      <version>3.2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jena</groupId>
-      <artifactId>jena-rdfconnection</artifactId>
-      <version>4.3.0</version>
+      <version>4.4.0</version>
     </dependency>
     <dependency>
       <groupId>com.dke.app</groupId>
@@ -52,8 +47,13 @@
     </dependency>
     <dependency>
       <groupId>org.apache.jena</groupId>
+      <artifactId>jena-rdfconnection</artifactId>
+      <version>4.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.jena</groupId>
       <artifactId>jena-shacl</artifactId>
-      <version>4.6.1</version>
+      <version>4.4.0</version>
     </dependency>
   </dependencies>
 

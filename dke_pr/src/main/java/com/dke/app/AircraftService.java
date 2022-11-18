@@ -5,6 +5,8 @@ import com.opencsv.exceptions.CsvException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -12,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AircraftService {
-    private static final String EX_URL = "http://www.dke.uni-linz.ac.at/pr-dke/";
 
     public static List<Model> getAircrafts() {
         // getting a list of state vectors depending on the implementation in the concrete class
@@ -27,7 +28,7 @@ public class AircraftService {
 
     private static List<String[]> getStaticData () {
         List<String[]> r = new LinkedList<>();
-        try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("staticData/aircraftDatabase.csv"))) {
             while (reader.readNext() != null) {
                 String[] i = reader.readNext();
                 if (i != null) {
@@ -57,6 +58,7 @@ public class AircraftService {
         } catch (CsvException e) {
             e.printStackTrace();
         }
+        r.forEach(System.out::println);
         return r;
     }
 
@@ -95,10 +97,26 @@ public class AircraftService {
     private void setProperty(Resource resource, Model model, String name, String value) {
         if(value != null && !value.equals("") && !value.equals("null")) {
             resource.addProperty(
-                    model.createProperty(EX_URL + name),
+                    model.createProperty(RDFService.EX_URL + name),
                     value
             );
         }
     }
 
+    // function to test out the composition of flight and state
+    public static List<Model> getMockFlight() {
+        List<Model> models = new LinkedList<>();
+        Model model = ModelFactory.createDefaultModel();
+
+        RDFService.setPrefixes(model);
+
+        model.createResource(RDFService.FLIGHT_URL+ "111111")
+                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"))
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Icao24"),"111111")
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Registration"),"whatever")
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Model"),"some Model")
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Typecode"), "111111");
+        models.add(model);
+        return  models;
+    }
 }
