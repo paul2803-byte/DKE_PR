@@ -6,10 +6,11 @@ import java.util.List;
 
 public class StorageService {
 
-    private static final String SERVER = "http://localhost:3030/#/dataset/flight_database/";
+    private static final String SERVER = "http://localhost:3030/flight_database/";
 
     public static void storeAircrafts(List<Model> aircrafts) {
         // TODO: implement getting the aircraft from the AircraftService.java and storing them in the knowledge graph
+        System.out.println(aircrafts.size());
         aircrafts.forEach(StorageService::storeModel);
     }
 

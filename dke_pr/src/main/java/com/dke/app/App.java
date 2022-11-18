@@ -27,9 +27,8 @@ public class App
 
         // read in the static data and store it to the knowledge graph
         System.out.println("Reading the static data");
-        // TODO: store static data
-        StorageService.storeAircrafts(AircraftService.getAircrafts());
-
+        // StorageService.storeAircrafts(AircraftService.getAircrafts());
+        StorageService.storeAircrafts(AircraftService.getMockFlight());
         askForNewStates(mockData, scanner);
     }
 
