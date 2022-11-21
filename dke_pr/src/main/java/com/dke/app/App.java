@@ -3,6 +3,8 @@ package com.dke.app;
 import com.dke.app.State.MockStates;
 import com.dke.app.State.RealStates;
 import com.dke.app.State.StateService;
+import org.apache.jena.atlas.web.HttpException;
+
 import java.util.Scanner;
 
 public class App 
@@ -20,21 +22,26 @@ public class App
 
         // inform the user about the mode
         if (mockData) {
-            System.out.println("Mock data gets used");
+            System.out.println("Mock data gets used.");
         } else {
-            System.out.println("Real data gets used");
+            System.out.println("Real data gets used.");
         }
 
         // read in the static data and store it to the knowledge graph
-        System.out.println("Reading the static data");
-        // StorageService.storeAircrafts(AircraftService.getAircrafts());
-        StorageService.storeAircrafts(AircraftService.getMockFlight());
-        askForNewStates(mockData, scanner);
+        System.out.println("Reading the static data...");
+        try {
+            System.out.println("Storing the data to the knowledge graph...");
+            // StorageService.storeAircrafts(AircraftService.getAircrafts());
+            StorageService.storeAircrafts(AircraftService.getMockFlight());
+            askForNewStates(mockData, scanner);
+        } catch (HttpException e) {
+            System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \n Then restart the application.");
+        }
     }
 
 
 
-    private static void askForNewStates(boolean mockData, Scanner scanner) {
+    private static void askForNewStates(boolean mockData, Scanner scanner)  throws HttpException{
         while(true) {
             System.out.print("Enter r to read new states or e to exit: ");
             String input = scanner.nextLine();
@@ -51,7 +58,7 @@ public class App
         }
     }
 
-    private static void storeStates(boolean mockData) {
+    private static void storeStates(boolean mockData) throws HttpException{
         StateService stateService;
         if (mockData) {
             stateService = new MockStates();
