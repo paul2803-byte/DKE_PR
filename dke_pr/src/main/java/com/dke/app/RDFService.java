@@ -8,6 +8,7 @@ public class RDFService {
     static public final String FLIGHT_URL = "http://www.dke.uni-linz.ac.at/pr-dke/flight#";
     static public final String EX_URL = "http://www.w3.org/2022/example#";
     static public final String STATE_URL = "http://www.dke.uni-linz.ac.at/pr-dke/state#";
+    static public final String MANUFACTURER_URL = "http://www.dke.uni-linz.ac.at/pr-dke/manufacturer#";
     static public final String PROPERTY_URL = "http://www.dke.uni-linz.ac.at/pr-dke/property#";
     static public final String RDF_URL = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -25,6 +26,7 @@ public class RDFService {
         model.setNsPrefix("state", STATE_URL);
         model.setNsPrefix("flight", FLIGHT_URL);
         model.setNsPrefix("rdf", RDF_URL);
-        model.setNsPrefix("property", RDFService.PROPERTY_URL);
+        model.setNsPrefix("property", PROPERTY_URL);
+        model.setNsPrefix("manufacturer", MANUFACTURER_URL);
     }
 }

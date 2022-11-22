@@ -31,8 +31,7 @@ public class App
         System.out.println("Reading the static data...");
         try {
             System.out.println("Storing the data to the knowledge graph...");
-            // StorageService.storeAircrafts(AircraftService.getAircrafts());
-            StorageService.storeAircrafts(AircraftService.getMockFlight());
+            StorageService.storeAircrafts(AircraftService.getAircrafts());
             askForNewStates(mockData, scanner);
         } catch (HttpException e) {
             System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \n Then restart the application.");
@@ -67,24 +66,4 @@ public class App
         }
         StorageService.storeStates(stateService.getStates());
     }
-
-
-
-
-
-    /*private static void testShacl() {
-        // TODO: find the place to out the shacl shapes
-        String SHAPES = "shape_graph_test.ttl";
-        String DATA = "data_graph_test.tll";
-
-        Graph shapesGraph = RDFDataMgr.loadGraph(SHAPES);
-        Graph dataGraph = RDFDataMgr.loadGraph(DATA);
-
-        Shapes shapes = Shapes.parse(shapesGraph);
-
-        ValidationReport report = ShaclValidator.get().validate(shapes, dataGraph);
-        ShLib.printReport(report);
-        System.out.println();
-        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
-    }*/
 }
