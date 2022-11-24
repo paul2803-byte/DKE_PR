@@ -5,72 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_apicatalog_titanium_json_ld_1_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_19_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_compress_1_21.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jakarta_json_2_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/.github/workflows/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/.nojekyll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/_static/custom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/_static/radar_small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/conf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/flight-response.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/index.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/java.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/make.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/python.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/rest-states-all-request.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/rest.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/state-vectors.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/states-response.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/docs/free/track-response.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/src/main/java/org/opensky/api/OpenSkyApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/src/main/java/org/opensky/model/OpenSkyStates.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/src/main/java/org/opensky/model/OpenSkyStatesDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/src/main/java/org/opensky/model/StateVector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/src/test/java/TestOpenSkyApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/java/src/test/java/TestOpenSkyStatesDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/python/MANIFEST.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/python/opensky_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/python/setup.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/python/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensky-api-master/opensky-api-master/python/test_opensky_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_13_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_andrewoma_dexx_collection_0_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_andrewoma_dexx_collection_0_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jsonld_java_jsonld_java_0_9_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jsonld_java_jsonld_java_0_13_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_cli_commons_cli_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_cli_commons_cli_1_5_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_15.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_8_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_csv_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_12_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_csv_1_9_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_cache_4_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_cache_4_5_13.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_13.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_arq_3_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_arq_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_base_3_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_base_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_core_3_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_core_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_iri_3_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_iri_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shaded_guava_3_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shaded_guava_4_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_thrift_libthrift_0_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_thrift_libthrift_0_15_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_35.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xerces_xercesImpl_2_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/dke_pr.iml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/dke_pr.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,16 +31,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.15429688" />
-    <property name="project.structure.side.proportion" value="0.36763006" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/paulfeichten/Desktop/uni/WS2022/DKE_PR/dev/DKE_PR",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jandu\Documents\Uni\Wirtschaftsinformatik\Semester 5\PR Data &amp; Knowledge Engineering\github repo\dke_pr\staticData" />
@@ -147,6 +81,7 @@
       <workItem from="1667588395753" duration="73000" />
       <workItem from="1667588494946" duration="116000" />
       <workItem from="1668096023645" duration="819000" />
+      <workItem from="1669287070727" duration="208000" />
     </task>
     <task id="LOCAL-00001" summary="auskommentiert der versuch von dir vorher">
       <created>1668083360926</created>
@@ -211,7 +146,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
