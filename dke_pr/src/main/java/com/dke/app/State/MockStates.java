@@ -9,22 +9,25 @@ public class MockStates extends StateService{
 
     @Override
     public Collection<StateVector> getStateVectors() {
-        // TODO: implement mocking of states
         Collection<StateVector> mockData = new ArrayList<>();
-        mockData.add(createMockedVector());
+        for(int i = 0; i < 20; i++) {
+            mockData.add(createMockedVector(i));
+        }
         return mockData;
     }
 
-    private StateVector createMockedVector() {
-        StateVector testVector = new StateVector("111111");
+    private StateVector createMockedVector(int i) {
+
+        StateVector testVector = new StateVector("10000"+i);
         testVector.setOriginCountry("Austria");
-        testVector.setLastPositionUpdate(1600000000.0);
-        testVector.setLongitude(160.0);
-        testVector.setLatitude(000.0);
-        testVector.setGeoAltitude(1000.0);
+        testVector.setLastPositionUpdate(150000000 + (Math.random()*(1600000000 - 1500000000)));
+        testVector.setLongitude(Math.round((46.3775998 + (Math.random() * (49.020703 - 46.377598)))*10000.0)/10000.0);
+        testVector.setLatitude(Math.round((9.478079 + (Math.random()*(17.1601461 - 9.478079)))*10000.0)/10000.0);
+        testVector.setGeoAltitude(Math.round((1000+ (Math.random()*(16000-1000)))*100.0)/100.0);
         testVector.setOnGround(false);
-        testVector.setVelocity(16000.0);
-        testVector.setVerticalRate(33333.2);
+        testVector.setVelocity(Math.round((83.3333 + (Math.random()*(305.5556 - 83.3333)))*100.0)/100.0);
+        testVector.setVerticalRate(Math.round((-5 + (Math.random()*(5 - -5)))*100.0)/100.0);
+
         return testVector;
     }
 }
