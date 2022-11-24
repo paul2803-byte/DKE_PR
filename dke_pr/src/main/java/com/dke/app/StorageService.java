@@ -14,7 +14,6 @@ public class StorageService {
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
 
     public static void storeAircrafts(List<Model> aircrafts) throws HttpException {
-        // TODO: implement getting the aircraft from the AircraftService.java and storing them in the knowledge graph
         aircrafts.forEach(aircraft -> storeModel(aircraft, STATIC_GRAPH));
     }
 
@@ -24,9 +23,6 @@ public class StorageService {
     }
 
     private static void storeModel(Model model, String graphName) {
-        // TODO: implement the storage of a state
-        System.out.print(model);
         RDFConnection.connect(SERVER).load(graphName, model);
-
     }
 }

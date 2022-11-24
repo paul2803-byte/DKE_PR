@@ -7,23 +7,6 @@
 @prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
 
 
-ex:FlightShape a sh:NodeShape ;
-	sh:targetClass ex:Flight;
-	sh:closed true ;
-	sh:property [
-	    sh:path rdf:type ;
-	] ;
-	sh:property [
-	    sh:path property:Icao24 ;
-	    sh:maxCount 1 ;
-        sh:minCount 1 ;
-        sh:dataType xsd:string ;
-        sh:length 6;
-    ] ;
-    sh:property [
-        sh:path property:HasState ;
-        sh:dataType ex:State ] .
-
 ex:StateShape a sh:NodeShape ;
     sh:targetClass ex:State ;
     sh:closed true;
@@ -31,11 +14,9 @@ ex:StateShape a sh:NodeShape ;
         sh:path rdf:type
     ] ;
     sh:property [
-        sh:path property:Icao24 ;
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
-        sh:dataType xsd:string ;
-        sh:length 6
+        sh:path property:Aircraft ;
+        sh:maxCount 1;
+        sh:minCount 1;
     ] ;
     sh:property [
         sh:path property:Time ;

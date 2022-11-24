@@ -26,7 +26,7 @@ public class App
         } else {
             System.out.println("Real data gets used.");
         }
-
+        // TODO: only read the static data if it has not been stored in the knowledge graph yet
         // read in the static data and store it to the knowledge graph
         System.out.println("Reading the static data...");
         try {

@@ -67,7 +67,6 @@ public class AircraftService {
         Model model = ModelFactory.createDefaultModel();
         RDFService.setPrefixes(model);
         Resource aircraft = model.createResource(RDFService.FLIGHT_URL+r[0])
-                //TODO addProperty through method call
                     .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"));
         RDFService.setProperty(aircraft, model, "Icao24",r[0]);
         RDFService.setProperty(aircraft, model, "Registration",r[1]);
@@ -81,9 +80,8 @@ public class AircraftService {
         RDFService.setProperty(aircraft, model, "WasBuilt",r[11]);
         RDFService.setProperty(aircraft, model, "Engine",r[12]);
         RDFService.setProperty(aircraft, model, "Description",r[13]);
-        if(r[2] != null && !r[2].equals("")) {
-            System.out.println(r[2]);
-            Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL+r[3])
+        if(false) {//if(r[2] != null && !r[2].equals("")) {
+            Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL)
                     .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Manufacturer"));
             RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[3]);
             RDFService.setProperty(manufacturer, model, "ManufacturerName", r[2]);
