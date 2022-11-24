@@ -28,19 +28,13 @@ public abstract class StateService {
     }
 
     private Model convertToModel(StateVector state) {
-        // TODO: check how the composition of state and aircraft is working --> state gets added to the aircraft
         Model model = ModelFactory.createDefaultModel();
 
         RDFService.setPrefixes(model);
 
-        Resource newFlight = model.createResource(RDFService.FLIGHT_URL + state.getIcao24())
-                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"));
-        // set the property through method call -> only adds a new value if its not null
-        RDFService.setProperty(newFlight, model, "Icao24", state.getIcao24());
-
         Resource newState = model.createResource( RDFService.STATE_URL + state.getLastPositionUpdate() + state.getIcao24())
-                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"State"));
-        RDFService.setProperty(newState, model, "Icao24", state.getIcao24());
+                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"State"))
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL + "Aircraft"), model.createResource(RDFService.FLIGHT_URL + state.getIcao24()));
         RDFService.setProperty(newState, model, "Time", String.valueOf(state.getLastPositionUpdate()));
         RDFService.setProperty(newState, model, "Country", state.getOriginCountry());
         RDFService.setProperty(newState, model, "Longitude", String.valueOf(state.getLongitude()));
@@ -51,7 +45,6 @@ public abstract class StateService {
         RDFService.setProperty(newState, model, "Heading", String.valueOf(state.getHeading()));
         RDFService.setProperty(newState, model, "VerticalRateShape", String.valueOf(state.getVerticalRate()));
         RDFService.setProperty(newState, model, "Velocity", String.valueOf(state.getVelocity()));
-        model.add(model.createStatement(newFlight, model.createProperty(RDFService.PROPERTY_URL +"HasState"), newState));
 
         return model;
     }

@@ -1,0 +1,697 @@
+Index: dke_pr/src/main/java/com/dke/app/ValidationService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.dke.app;\n\nimport org.apache.jena.base.Sys;\nimport org.apache.jena.graph.Graph;\nimport org.apache.jena.rdf.model.Model;\nimport org.apache.jena.riot.Lang;\nimport org.apache.jena.riot.RDFDataMgr;\nimport org.apache.jena.shacl.ShaclValidator;\nimport org.apache.jena.shacl.Shapes;\nimport org.apache.jena.shacl.ValidationReport;\n\npublic class ValidationService {\n\n    public static boolean validateState(Model stateModel) {\n        String SHAPE = \"shacl_shapes/flight_shacl.ttl\";\n        Graph shapesGraph = RDFDataMgr.loadGraph(SHAPE);\n        // TODO: check why type of state gets not checked\n\n        Shapes shapes = Shapes.parse(shapesGraph);\n        ValidationReport report = ShaclValidator.get().validate(shapes, stateModel.getGraph());\n        boolean valid = report.conforms();\n        if(valid) {\n            return true;\n        } else {\n            // log the result to console if the model is invalid\n            RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);\n            return false;\n        }\n    }\n\n    public static boolean validateAircraft(Graph aircraftGraph) {\n        // TODO: implement validation with the shcal shape\n        return true;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dke_pr/src/main/java/com/dke/app/ValidationService.java b/dke_pr/src/main/java/com/dke/app/ValidationService.java
+--- a/dke_pr/src/main/java/com/dke/app/ValidationService.java	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ b/dke_pr/src/main/java/com/dke/app/ValidationService.java	(date 1668761782830)
+@@ -12,7 +12,7 @@
+ public class ValidationService {
+ 
+     public static boolean validateState(Model stateModel) {
+-        String SHAPE = "shacl_shapes/flight_shacl.ttl";
++        String SHAPE = "dke_pr/shacl_shapes/flight_shacl.ttl";
+         Graph shapesGraph = RDFDataMgr.loadGraph(SHAPE);
+         // TODO: check why type of state gets not checked
+ 
+Index: .idea/libraries/Maven__org_apache_commons_commons_csv_1_3.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_commons_commons_csv_1_3.xml b/.idea/libraries/Maven__org_apache_commons_commons_csv_1_3.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_commons_commons_csv_1_3.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.commons:commons-csv:1.3">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-csv/1.3/commons-csv-1.3.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-csv/1.3/commons-csv-1.3-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-csv/1.3/commons-csv-1.3-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_base_3_2_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_base_3_2_0.xml b/.idea/libraries/Maven__org_apache_jena_jena_base_3_2_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_base_3_2_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-base:3.2.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-base/3.2.0/jena-base-3.2.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-base/3.2.0/jena-base-3.2.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-base/3.2.0/jena-base-3.2.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__com_github_andrewoma_dexx_collection_0_6.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__com_github_andrewoma_dexx_collection_0_6.xml b/.idea/libraries/Maven__com_github_andrewoma_dexx_collection_0_6.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__com_github_andrewoma_dexx_collection_0_6.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: com.github.andrewoma.dexx:collection:0.6">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/github/andrewoma/dexx/collection/0.6/collection-0.6.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/github/andrewoma/dexx/collection/0.6/collection-0.6-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/github/andrewoma/dexx/collection/0.6/collection-0.6-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__commons_io_commons_io_2_5.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__commons_io_commons_io_2_5.xml b/.idea/libraries/Maven__commons_io_commons_io_2_5.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__commons_io_commons_io_2_5.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: commons-io:commons-io:2.5">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.5/commons-io-2.5.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.5/commons-io-2.5-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.5/commons-io-2.5-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__xerces_xercesImpl_2_11_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__xerces_xercesImpl_2_11_0.xml b/.idea/libraries/Maven__xerces_xercesImpl_2_11_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__xerces_xercesImpl_2_11_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: xerces:xercesImpl:2.11.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_httpcomponents_httpclient_cache_4_5_2.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_cache_4_5_2.xml b/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_cache_4_5_2.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_cache_4_5_2.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.2">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient-cache/4.5.2/httpclient-cache-4.5.2.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient-cache/4.5.2/httpclient-cache-4.5.2-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient-cache/4.5.2/httpclient-cache-4.5.2-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml b/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.slf4j:slf4j-api:1.7.21">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_6.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_6.xml b/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_6.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_6.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.6">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.6/jackson-core-2.12.6.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.6/jackson-core-2.12.6-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.6/jackson-core-2.12.6-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_shaded_guava_3_2_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_shaded_guava_3_2_0.xml b/.idea/libraries/Maven__org_apache_jena_jena_shaded_guava_3_2_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_shaded_guava_3_2_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-shaded-guava:3.2.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-shaded-guava/3.2.0/jena-shaded-guava-3.2.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-shaded-guava/3.2.0/jena-shaded-guava-3.2.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-shaded-guava/3.2.0/jena-shaded-guava-3.2.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml b/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.commons:commons-lang3:3.4">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_thrift_libthrift_0_9_3.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_thrift_libthrift_0_9_3.xml b/.idea/libraries/Maven__org_apache_thrift_libthrift_0_9_3.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_thrift_libthrift_0_9_3.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.thrift:libthrift:0.9.3">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/thrift/libthrift/0.9.3/libthrift-0.9.3.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/thrift/libthrift/0.9.3/libthrift-0.9.3-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/thrift/libthrift/0.9.3/libthrift-0.9.3-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/runConfigurations.xml
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+deleted file mode 100644
+--- a/.idea/runConfigurations.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml b/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-shacl:4.6.1">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-shacl/4.6.1/jena-shacl-4.6.1.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-shacl/4.6.1/jena-shacl-4.6.1-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-shacl/4.6.1/jena-shacl-4.6.1-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml b/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.slf4j:jcl-over-slf4j:1.7.21">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__commons_cli_commons_cli_1_3.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__commons_cli_commons_cli_1_3.xml b/.idea/libraries/Maven__commons_cli_commons_cli_1_3.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__commons_cli_commons_cli_1_3.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: commons-cli:commons-cli:1.3">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3/commons-cli-1.3.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3/commons-cli-1.3-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3/commons-cli-1.3-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_iri_3_2_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_iri_3_2_0.xml b/.idea/libraries/Maven__org_apache_jena_jena_iri_3_2_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_iri_3_2_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-iri:3.2.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-iri/3.2.0/jena-iri-3.2.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-iri/3.2.0/jena-iri-3.2.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-iri/3.2.0/jena-iri-3.2.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml b/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-rdfconnection:4.3.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-rdfconnection/4.3.0/jena-rdfconnection-4.3.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-rdfconnection/4.3.0/jena-rdfconnection-4.3.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-rdfconnection/4.3.0/jena-rdfconnection-4.3.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_arq_3_2_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_arq_3_2_0.xml b/.idea/libraries/Maven__org_apache_jena_jena_arq_3_2_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_arq_3_2_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-arq:3.2.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-arq/3.2.0/jena-arq-3.2.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-arq/3.2.0/jena-arq-3.2.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-arq/3.2.0/jena-arq-3.2.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_jena_jena_core_3_2_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_jena_jena_core_3_2_0.xml b/.idea/libraries/Maven__org_apache_jena_jena_core_3_2_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_jena_jena_core_3_2_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.jena:jena-core:3.2.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-core/3.2.0/jena-core-3.2.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-core/3.2.0/jena-core-3.2.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/jena/jena-core/3.2.0/jena-core-3.2.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__com_github_jsonld_java_jsonld_java_0_9_0.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__com_github_jsonld_java_jsonld_java_0_9_0.xml b/.idea/libraries/Maven__com_github_jsonld_java_jsonld_java_0_9_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__com_github_jsonld_java_jsonld_java_0_9_0.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: com.github.jsonld-java:jsonld-java:0.9.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/github/jsonld-java/jsonld-java/0.9.0/jsonld-java-0.9.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/github/jsonld-java/jsonld-java/0.9.0/jsonld-java-0.9.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/github/jsonld-java/jsonld-java/0.9.0/jsonld-java-0.9.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml b/.idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: xml-apis:xml-apis:1.4.01">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_2.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_2.xml b/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_2.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_2.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.httpcomponents:httpclient:4.5.2">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_4.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_4.xml b/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_4.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.apache.httpcomponents:httpcore:4.4.4">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__commons_codec_commons_codec_1_9.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__commons_codec_commons_codec_1_9.xml b/.idea/libraries/Maven__commons_codec_commons_codec_1_9.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__commons_codec_commons_codec_1_9.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ /dev/null	(revision 9a936c39e8cecf489681023d26023145aefce577)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: commons-codec:commons-codec:1.9">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.9/commons-codec-1.9.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.9/commons-codec-1.9-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.9/commons-codec-1.9-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"861818ef-020a-459c-ab03-2186e944087c\" name=\"Changes\" comment=\"starting to implement creation of static data\">\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/dke_pr/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dke_pr/pom.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2GqUKm6jCsL6AL5iwcUnZT4tSNV\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n    <property name=\"project.structure.last.edited\" value=\"Artifacts\" />\n    <property name=\"project.structure.proportion\" value=\"0.15429688\" />\n    <property name=\"project.structure.side.proportion\" value=\"0.36763006\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"reference.settings.project.maven.importing\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"C:\\Users\\jandu\\Documents\\Uni\\Wirtschaftsinformatik\\Semester 5\\PR Data &amp; Knowledge Engineering\\github repo\\dke_pr\\staticData\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"App\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.dke.app.App\" />\n      <module name=\"dke_pr\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.dke.app.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\n      <option name=\"filePath\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.App\" />\n        <item itemvalue=\"Application.App\" />\n        <item itemvalue=\"Application.App\" />\n        <item itemvalue=\"Application.App\" />\n        <item itemvalue=\"Application.App\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"861818ef-020a-459c-ab03-2186e944087c\" name=\"Changes\" comment=\"\" />\n      <created>1667115548711</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1667115548711</updated>\n      <workItem from=\"1667115551394\" duration=\"4423000\" />\n      <workItem from=\"1667588395753\" duration=\"73000\" />\n      <workItem from=\"1667588494946\" duration=\"116000\" />\n      <workItem from=\"1668096023645\" duration=\"819000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"auskommentiert der versuch von dir vorher\">\n      <created>1668083360926</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1668083360927</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\".\">\n      <created>1668332193961</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1668332193961</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data.\">\n      <created>1668432018381</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1668432018381</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"small fixes\">\n      <created>1668432295362</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1668432295362</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"starting to implement creation of static data\">\n      <created>1668696701660</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1668696701660</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"6\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"static_Data\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"auskommentiert der versuch von dir vorher\" />\n    <MESSAGE value=\".\" />\n    <MESSAGE value=\"Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data.\" />\n    <MESSAGE value=\"small fixes\" />\n    <MESSAGE value=\"starting to implement creation of static data\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"starting to implement creation of static data\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ b/.idea/workspace.xml	(date 1668761648504)
+@@ -4,17 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="starting to implement creation of static data">
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_rdfconnection_4_3_0.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_jena_jena_shacl_4_6_1.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dke_pr/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/pom.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/ValidationService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" afterDir="false" />
+-    </list>
++    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="starting to implement creation of static data" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -37,15 +27,12 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">
+-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+-    <property name="project.structure.last.edited" value="Artifacts" />
+-    <property name="project.structure.proportion" value="0.15429688" />
+-    <property name="project.structure.side.proportion" value="0.36763006" />
+-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+-  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "WebServerToolWindowFactoryState": "false",
++    "last_opened_file_path": "/Users/paulfeichten/Desktop/uni/WS2022/DKE_PR/dev/DKE_PR"
++  }
++}]]></component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Users\jandu\Documents\Uni\Wirtschaftsinformatik\Semester 5\PR Data &amp; Knowledge Engineering\github repo\dke_pr\staticData" />
+@@ -98,6 +85,7 @@
+       <workItem from="1667588395753" duration="73000" />
+       <workItem from="1667588494946" duration="116000" />
+       <workItem from="1668096023645" duration="819000" />
++      <workItem from="1668761598932" duration="50000" />
+     </task>
+     <task id="LOCAL-00001" summary="auskommentiert der versuch von dir vorher">
+       <created>1668083360926</created>
+@@ -162,7 +150,6 @@
+         </entry>
+       </map>
+     </option>
+-    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="auskommentiert der versuch von dir vorher" />
+Index: dke_pr/dke_pr.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule=\"true\" type=\"JAVA_MODULE\" version=\"4\">\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\n    <output url=\"file://$MODULE_DIR$/target/classes\" />\n    <output-test url=\"file://$MODULE_DIR$/target/test-classes\" />\n    <content url=\"file://$MODULE_DIR$\">\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/java\" isTestSource=\"false\" />\n      <sourceFolder url=\"file://$MODULE_DIR$/src/test/java\" isTestSource=\"true\" />\n      <excludeFolder url=\"file://$MODULE_DIR$/target\" />\n    </content>\n    <orderEntry type=\"inheritedJdk\" />\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: junit:junit:4.11\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.hamcrest:hamcrest-core:1.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.opensky:opensky-api:1.3.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.squareup.okhttp3:okhttp:3.6.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.squareup.okio:okio:1.11.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-databind:2.12.6.1\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-core:2.12.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-arq:3.2.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-core:3.2.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-iri:3.2.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: xerces:xercesImpl:2.11.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: xml-apis:xml-apis:1.4.01\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: commons-cli:commons-cli:1.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-base:3.2.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.github.andrewoma.dexx:collection:0.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-shaded-guava:3.2.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.httpcomponents:httpclient:4.5.2\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.httpcomponents:httpcore:4.4.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: commons-codec:commons-codec:1.9\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.github.jsonld-java:jsonld-java:0.9.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: commons-io:commons-io:2.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.httpcomponents:httpclient-cache:4.5.2\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.thrift:libthrift:0.9.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.slf4j:jcl-over-slf4j:1.7.21\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-csv:1.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-lang3:3.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.slf4j:slf4j-api:1.7.21\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-rdfconnection:4.3.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.opencsv:opencsv:5.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-text:1.9\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: commons-beanutils:commons-beanutils:1.9.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: commons-logging:commons-logging:1.2\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: commons-collections:commons-collections:3.2.2\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-collections4:4.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.jena:jena-shacl:4.6.1\" level=\"project\" />\n  </component>\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dke_pr/dke_pr.iml b/dke_pr/dke_pr.iml
+--- a/dke_pr/dke_pr.iml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ b/dke_pr/dke_pr.iml	(date 1668761648414)
+@@ -17,34 +17,37 @@
+     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.11.0" level="project" />
+     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.6.1" level="project" />
+     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.6" level="project" />
+-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.6" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-arq:3.2.0" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-core:3.2.0" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-iri:3.2.0" level="project" />
+-    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.11.0" level="project" />
+-    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
+-    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.3" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-base:3.2.0" level="project" />
+-    <orderEntry type="library" name="Maven: com.github.andrewoma.dexx:collection:0.6" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-shaded-guava:3.2.0" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.4" level="project" />
+-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
+-    <orderEntry type="library" name="Maven: com.github.jsonld-java:jsonld-java:0.9.0" level="project" />
+-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.2" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.9.3" level="project" />
+-    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.21" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.3" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
+-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-rdfconnection:4.3.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-arq:4.4.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-core:4.4.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-base:4.4.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-shaded-guava:4.4.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.9.0" level="project" />
++    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.15" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.21" level="project" />
++    <orderEntry type="library" name="Maven: com.github.andrewoma.dexx:collection:0.7" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-iri:4.4.0" level="project" />
++    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.5.0" level="project" />
++    <orderEntry type="library" name="Maven: com.github.jsonld-java:jsonld-java:0.13.4" level="project" />
++    <orderEntry type="library" name="Maven: commons-io:commons-io:2.8.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.13" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
++    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.35" level="project" />
++    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.35" level="project" />
++    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.1" level="project" />
++    <orderEntry type="library" name="Maven: com.apicatalog:titanium-json-ld:1.2.0" level="project" />
++    <orderEntry type="library" name="Maven: org.glassfish:jakarta.json:2.0.1" level="project" />
++    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.19.3" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.15.0" level="project" />
++    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.2" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.12.0" level="project" />
+     <orderEntry type="library" name="Maven: com.opencsv:opencsv:5.6" level="project" />
+     <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.9" level="project" />
+     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.4" level="project" />
+     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
+     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.4" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.jena:jena-shacl:4.6.1" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-rdfconnection:4.4.0" level="project" />
++    <orderEntry type="library" name="Maven: org.apache.jena:jena-shacl:4.4.0" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <annotationProcessing>\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\n        <outputRelativeToContentRoot value=\"true\" />\n        <module name=\"dke_pr\" />\n      </profile>\n    </annotationProcessing>\n    <bytecodeTargetLevel>\n      <module name=\"dke_pr\" target=\"8\" />\n    </bytecodeTargetLevel>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ b/.idea/compiler.xml	(date 1668761648507)
+@@ -10,7 +10,7 @@
+       </profile>
+     </annotationProcessing>
+     <bytecodeTargetLevel>
+-      <module name="dke_pr" target="8" />
++      <module name="dke_pr" target="1.8" />
+     </bytecodeTargetLevel>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"Encoding\">\n    <file url=\"file://$PROJECT_DIR$/dke_pr/src/main/java\" charset=\"UTF-8\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+--- a/.idea/encodings.xml	(revision 9a936c39e8cecf489681023d26023145aefce577)
++++ b/.idea/encodings.xml	(date 1668761648508)
+@@ -2,5 +2,6 @@
+ <project version="4">
+   <component name="Encoding">
+     <file url="file://$PROJECT_DIR$/dke_pr/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/dke_pr/src/main/resources" charset="UTF-8" />
+   </component>
+ </project>
+\ No newline at end of file

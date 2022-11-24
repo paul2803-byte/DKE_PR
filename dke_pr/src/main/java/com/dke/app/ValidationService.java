@@ -11,9 +11,8 @@ import org.apache.jena.shacl.ValidationReport;
 public class ValidationService {
 
     public static boolean validateState(Model stateModel) {
-        String SHAPE = "dke_pr/shacl_shapes/flight_shacl.ttl";
+        String SHAPE = "dke_pr/shacl_shapes/state_shacl.ttl";
         Graph shapesGraph = RDFDataMgr.loadGraph(SHAPE);
-        // TODO: check why type of state gets not checked
 
         Shapes shapes = Shapes.parse(shapesGraph);
         ValidationReport report = ShaclValidator.get().validate(shapes, stateModel.getGraph());

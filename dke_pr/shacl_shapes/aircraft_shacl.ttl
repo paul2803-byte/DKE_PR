@@ -1,0 +1,99 @@
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
+@prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+
+
+ex:FlightShape a sh:NodeShape ;
+	sh:targetClass ex:Flight;
+	sh:closed true ;
+	sh:property [
+	    sh:path rdf:type ;
+	] ;
+	sh:property [
+	    sh:path property:Icao24 ;
+	    sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType xsd:string ;
+        sh:length 6;
+    ] ;
+    sh:property [
+          sh:path property:Registration ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+     ] ;
+    sh:property [
+          sh:path property:Model ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:Typecode ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:Serialnumber ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:IcaoAircraftType ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:RegisteredSince ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:RegisteredUntil ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:WasBuilt ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:Description ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ] ;
+    sh:property [
+          sh:path property:Engine ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ];
+    sh:property [
+          sh:path property:Owner ;
+          sh:datatype xsd:string ;
+          sh:maxCount 1;
+      ];
+    sh:property [
+          sh:path property:Manufacturer ;
+          sh:node ex:Manufacturer ;
+          sh:maxCount 1;
+      ].
+
+ex:Manufacturer a sh:NodeShape ;
+	sh:targetClass ex:Manufacturer;
+    sh:closed true ;
+    sh:property [
+    	    sh:path rdf:type ;
+    ] ;
+    sh:property [
+          sh:path property:ManufacturerIcao ;
+          sh:datatype xsd:string ;
+          sh:minCount 1;
+          sh:maxCount 1;
+    ] ;
+    sh:property [
+          sh:path property:ManufacturerName ;
+          sh:datatype xsd:string ;
+    ] .
