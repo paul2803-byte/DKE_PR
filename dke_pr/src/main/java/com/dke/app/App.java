@@ -4,7 +4,9 @@ import com.dke.app.State.MockStates;
 import com.dke.app.State.RealStates;
 import com.dke.app.State.StateService;
 import org.apache.jena.atlas.web.HttpException;
+import org.apache.jena.rdf.model.Model;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App 
@@ -27,11 +29,17 @@ public class App
             System.out.println("Real data gets used.");
         }
         // TODO: only read the static data if it has not been stored in the knowledge graph yet
-        // read in the static data and store it to the knowledge graph
-        System.out.println("Reading the static data...");
+
         try {
-            System.out.println("Storing the data to the knowledge graph...");
-            StorageService.storeAircrafts(AircraftService.getAircrafts());
+            if(StorageService.checkIfStaticData()) {
+                System.out.println("Static data already got read in continuing with States");
+            } else {
+                System.out.println("Reading the static data...");
+                List<Model> aircraft =  AircraftService.getAircrafts();
+                System.out.println("Storing the data to the knowledge graph...");
+                StorageService.storeAircrafts(aircraft);
+                System.out.println("Static data got stored");
+            }
             askForNewStates(mockData, scanner);
         } catch (HttpException e) {
             System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \n Then restart the application.");

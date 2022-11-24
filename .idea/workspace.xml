@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="removing open sky api from branch">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/StorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/target/classes/com/dke/app/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,15 +34,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/paulfeichten/Desktop/uni/WS2022/DKE_PR/dev/DKE_PR",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/paulfeichten/Desktop/uni/WS2022/DKE_PR/dev/DKE_PR&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jandu\Documents\Uni\Wirtschaftsinformatik\Semester 5\PR Data &amp; Knowledge Engineering\github repo\dke_pr\staticData" />
@@ -118,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668696701660</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="removing open sky api from branch">
+      <created>1669288250646</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669288250646</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +167,7 @@
     <MESSAGE value="Loading of static Data,&#10;Merge of Dynamic&amp;Static Data,&#10;RDF- merge of dynamic&amp;Static Data." />
     <MESSAGE value="small fixes" />
     <MESSAGE value="starting to implement creation of static data" />
-    <option name="LAST_COMMIT_MESSAGE" value="starting to implement creation of static data" />
+    <MESSAGE value="removing open sky api from branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="removing open sky api from branch" />
   </component>
 </project>
