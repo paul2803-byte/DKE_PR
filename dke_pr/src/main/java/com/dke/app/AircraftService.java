@@ -43,8 +43,9 @@ public class AircraftService {
                 if (i != null && i[0]!= null && i[1] != null && i[1].length() !=0) {
                             if ((i[1].charAt(0)=='D' && i[1].charAt(1) == '-')||(i[1].charAt(0) == 'O' && i[1].charAt(1) == 'E' && i[1].charAt(2) == '-') || (i[1].charAt(0) == 'C' && i[1].charAt(1) == 'H' && i[1].charAt(2) == '-')) {
                                 String[] values = new String[14];
-                                i[2]= i[2].replace(" ", "");
-                                i[2]= i[2].replace("'", "");
+                                i[2]= i[2].replace(" ", "");i[2]= i[2].replace("'", "");
+                                i[2]= i[2].replace("&", "AND");i[2]= i[2].replace("(", "");
+                                i[2]= i[2].replace(")", "");
                                 for (int j = 0; j < 7; j++) {
                                     values[j] = i[j];
                                 }
