@@ -29,15 +29,22 @@ public class AircraftService {
 
     private static List<String[]> getStaticData () {
         List<String[]> r = new LinkedList<>();
+        ;
         try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))) {
+            /*int row_count=0;
+            CSVReader reader2=reader;
+            while(reader.readNext() != null){
+                row_count++;
+                reader2.readNext();
+            }
+            System.out.println(row_count+" reader");*/
             while (reader.readNext() != null) {
                 String[] i = reader.readNext();
-                if (i != null) {
-                    if (i[1] != null) {
-                        if (i[1].length() != 0) {
-                            if (/*(i[1].charAt(0)=='D' && i[1].charAt(1) == '-')||*/(i[1].charAt(0) == 'O' && i[1].charAt(1) == 'E' && i[1].charAt(2) == '-') || (i[1].charAt(0) == 'C' && i[1].charAt(1) == 'H' && i[1].charAt(2) == '-')) {
-                                //r.add(i);
+                if (i != null && i[0]!= null && i[1] != null && i[1].length() !=0) {
+                            if ((i[1].charAt(0)=='D' && i[1].charAt(1) == '-')||(i[1].charAt(0) == 'O' && i[1].charAt(1) == 'E' && i[1].charAt(2) == '-') || (i[1].charAt(0) == 'C' && i[1].charAt(1) == 'H' && i[1].charAt(2) == '-')) {
                                 String[] values = new String[14];
+                                i[2]= i[2].replace(" ", "");
+                                i[2]= i[2].replace("'", "");
                                 for (int j = 0; j < 7; j++) {
                                     values[j] = i[j];
                                 }
@@ -50,8 +57,6 @@ public class AircraftService {
                                 values[13] = i[26];
                                 r.add(values);
                             }
-                        }
-                    }
                 }
             }
         } catch (IOException e) {
@@ -59,6 +64,7 @@ public class AircraftService {
         } catch (CsvException e) {
             e.printStackTrace();
         }
+        System.out.println(r.size());
         return r;
     }
 
@@ -80,11 +86,11 @@ public class AircraftService {
         RDFService.setProperty(aircraft, model, "WasBuilt",r[11]);
         RDFService.setProperty(aircraft, model, "Engine",r[12]);
         RDFService.setProperty(aircraft, model, "Description",r[13]);
-        if(false) {//if(r[2] != null && !r[2].equals("")) {
-            Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL)
+        if(r[2] != null && !r[2].equals("")) {
+            Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL+r[2])
                     .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Manufacturer"));
-            RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[3]);
-            RDFService.setProperty(manufacturer, model, "ManufacturerName", r[2]);
+            RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[2]);
+            RDFService.setProperty(manufacturer, model, "ManufacturerName", r[3]);
             model.add(model.createStatement(aircraft, model.createProperty(RDFService.PROPERTY_URL +"Manufacturer"), manufacturer));
         }
 
