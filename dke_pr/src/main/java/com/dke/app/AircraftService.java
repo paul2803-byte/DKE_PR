@@ -31,13 +31,6 @@ public class AircraftService {
         List<String[]> r = new LinkedList<>();
         ;
         try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))) {
-            /*int row_count=0;
-            CSVReader reader2=reader;
-            while(reader.readNext() != null){
-                row_count++;
-                reader2.readNext();
-            }
-            System.out.println(row_count+" reader");*/
             while (reader.readNext() != null) {
                 String[] i = reader.readNext();
                 if (i != null && i[0]!= null && i[1] != null && i[1].length() !=0) {
