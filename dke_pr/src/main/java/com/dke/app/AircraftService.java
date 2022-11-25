@@ -4,7 +4,6 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
@@ -80,7 +79,7 @@ public class AircraftService {
         RDFService.setProperty(aircraft, model, "WasBuilt",r[11]);
         RDFService.setProperty(aircraft, model, "Engine",r[12]);
         RDFService.setProperty(aircraft, model, "Description",r[13]);
-        if(false) {//if(r[2] != null && !r[2].equals("")) {
+        if(r[2] != null && !r[2].equals("")) {
             Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL)
                     .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Manufacturer"));
             RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[3]);

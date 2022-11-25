@@ -1,5 +1,7 @@
 package com.dke.app;
 
+import me.tongfei.progressbar.ProgressBar;
+import me.tongfei.progressbar.ProgressBarStyle;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdfconnection.RDFConnection;
@@ -15,12 +17,22 @@ public class StorageService {
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
 
     public static void storeAircrafts(List<Model> aircrafts) throws HttpException {
-        aircrafts.forEach(aircraft -> storeModel(aircraft, STATIC_GRAPH));
+        ProgressBar pb = new ProgressBar("Uploading Aircrafts", aircrafts.size());
+        aircrafts.forEach(aircraft -> {
+            storeModel(aircraft, STATIC_GRAPH);
+            pb.step();
+        });
+        pb.close();
     }
 
     public static void storeStates(List<Model> states) throws HttpException {
+        ProgressBar pb = new ProgressBar("Uploading States", states.size());
         String dynamicLink = DYNAMIC_GRAPH + LocalDateTime.now();
-        states.forEach(state -> storeModel(state, dynamicLink));
+        states.forEach(state -> {
+            storeModel(state, dynamicLink);
+            pb.step();
+        });
+        pb.close();
     }
 
     private static void storeModel(Model model, String graphName) {
@@ -34,6 +46,5 @@ public class StorageService {
             System.out.println(e.getStackTrace());
             return false;
         }
-
     }
 }
