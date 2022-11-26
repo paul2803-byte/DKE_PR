@@ -30,6 +30,8 @@ public class App
         }
         // TODO: only read the static data if it has not been stored in the knowledge graph yet
 
+
+
         try {
             if(StorageService.checkIfStaticData()) {
                 System.out.println("Static data already got read in continuing with States");
