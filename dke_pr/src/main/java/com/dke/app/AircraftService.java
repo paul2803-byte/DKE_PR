@@ -1,14 +1,13 @@
 package com.dke.app;
 
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import com.opencsv.CSVReaderBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,41 +25,45 @@ public class AircraftService {
                 .collect(Collectors.toList());
     }
 
-    private static List<String[]> getStaticData () {
-        List<String[]> r = new LinkedList<>();
-        try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))) {
-            while (reader.readNext() != null) {
-                String[] i = reader.readNext();
-                if (i != null) {
-                    if (i[1] != null) {
-                        if (i[1].length() != 0) {
-                            if (/*(i[1].charAt(0)=='D' && i[1].charAt(1) == '-')||*/(i[1].charAt(0) == 'O' && i[1].charAt(1) == 'E' && i[1].charAt(2) == '-') || (i[1].charAt(0) == 'C' && i[1].charAt(1) == 'H' && i[1].charAt(2) == '-')) {
-                                //r.add(i);
-                                String[] values = new String[14];
-                                for (int j = 0; j < 7; j++) {
-                                    values[j] = i[j];
-                                }
-                                values[7] = i[8];
-                                values[8] = i[13];
-                                values[9] = i[15];
-                                values[10] = i[16];
-                                values[11] = i[18];
-                                values[12] = i[21];
-                                values[13] = i[26];
-                                r.add(values);
+
+    private static List<String[]> getStaticData (){
+        List<String[]> result= new LinkedList<>();
+            try {
+                FileReader filereader = new FileReader("dke_pr/staticData/aircraftDatabase.csv");
+                CSVReader csvReader = new CSVReaderBuilder(filereader)
+                        .withSkipLines(1)
+                        .build();
+                List<String[]> allData = csvReader.readAll();
+                System.out.println(allData.size());
+
+                for(String[] data : allData){
+                    if(data != null && data[1]!=null &&data[1].length()!=0){
+                        if((data[1].charAt(0)=='D'&&data[1].charAt(1)=='-')||(data[1].charAt(0)=='O'&&data[1].charAt(1)=='E'&&data[1].charAt(2)=='-')||(data[1].charAt(0)=='C'&&data[1].charAt(1)=='H'&&data[1].charAt(2)=='-')){
+                            data[2]= data[2].replace(" ", "");data[2]= data[2].replace("'", "");
+                            data[2]= data[2].replace("&", "AND");data[2]= data[2].replace("(", "");
+                            data[2]= data[2].replace(")", "");
+                            String[] values = new String[14];
+                            for(int l=0; l<7;l++) {
+                                values[l] = data[l];
                             }
+                            values[7] = data[8];
+                            values[8] = data[13];
+                            values[9] = data[15];
+                            values[10] = data[16];
+                            values[11] = data[18];
+                            values[12] = data[21];
+                            values[13] = data[26];
+                            result.add(values);
                         }
                     }
                 }
+                System.out.println("testresultsize"+result.size());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CsvException e) {
-            e.printStackTrace();
-        }
-        return r;
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
     }
-
 
     private static Model convertToModel(String[] r){
         Model model = ModelFactory.createDefaultModel();
@@ -80,10 +83,10 @@ public class AircraftService {
         RDFService.setProperty(aircraft, model, "Engine",r[12]);
         RDFService.setProperty(aircraft, model, "Description",r[13]);
         if(r[2] != null && !r[2].equals("")) {
-            Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL)
+            Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL+r[2])
                     .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Manufacturer"));
-            RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[3]);
-            RDFService.setProperty(manufacturer, model, "ManufacturerName", r[2]);
+            RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[2]);
+            RDFService.setProperty(manufacturer, model, "ManufacturerName", r[3]);
             model.add(model.createStatement(aircraft, model.createProperty(RDFService.PROPERTY_URL +"Manufacturer"), manufacturer));
         }
 
