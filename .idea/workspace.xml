@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="removing open sky api from branch">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_11_22__09_56__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_11_22__09_56__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_18_11_22__09_57__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_18_11_22__09_57__Changes_.xml" afterDir="false" />
+    <list default="true" id="861818ef-020a-459c-ab03-2186e944087c" name="Changes" comment="checking if the static data already got uploaded">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/AircraftService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/State/MockStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/dke_pr/src/main/java/com/dke/app/State/MockStates.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669288250646</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="checking if the static data already got uploaded">
+      <created>1669291298200</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669291298200</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +165,7 @@
     <MESSAGE value="small fixes" />
     <MESSAGE value="starting to implement creation of static data" />
     <MESSAGE value="removing open sky api from branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="removing open sky api from branch" />
+    <MESSAGE value="checking if the static data already got uploaded" />
+    <option name="LAST_COMMIT_MESSAGE" value="checking if the static data already got uploaded" />
   </component>
 </project>
