@@ -2,18 +2,12 @@ package com.dke.app;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
 import java.io.FileReader;
-import java.io.IOException;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,40 +25,6 @@ public class AircraftService {
                 .collect(Collectors.toList());
     }
 
-    /*private static List<String[]> getStaticData () {
-        List<String[]> r = new LinkedList<>();
-        int counter= 0;
-        try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))) {
-            while (reader.readNext() != null) {
-                String[] i = reader.readNext();
-                counter++;
-                if (i != null && i[0]!= null && i[1] != null && !i[1].isEmpty()) {
-                            if ((i[1].charAt(0)=='D' && i[1].charAt(1) == '-')||(i[1].charAt(0) == 'O' && i[1].charAt(1) == 'E' && i[1].charAt(2) == '-') || (i[1].charAt(0) == 'C' && i[1].charAt(1) == 'H' && i[1].charAt(2) == '-')) {
-                                String[] values = new String[14];
-                                i[2]= i[2].replace(" ", "");i[2]= i[2].replace("'", "");
-                                i[2]= i[2].replace("&", "AND");i[2]= i[2].replace("(", "");
-                                i[2]= i[2].replace(")", "");
-                                for (int j = 0; j < 7; j++) {
-                                    values[j] = i[j];
-                                }
-                                values[7] = i[8];
-                                values[8] = i[13];
-                                values[9] = i[15];
-                                values[10] = i[16];
-                                values[11] = i[18];
-                                values[12] = i[21];
-                                values[13] = i[26];
-                                r.add(values);
-                            }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CsvException e) {
-            e.printStackTrace();
-        }
-        return r;
-    }*/
 
     private static List<String[]> getStaticData (){
         List<String[]> result= new LinkedList<>();
