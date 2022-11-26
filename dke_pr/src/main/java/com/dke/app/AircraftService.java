@@ -1,6 +1,7 @@
 package com.dke.app;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -10,6 +11,9 @@ import org.apache.jena.vocabulary.RDF;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +31,14 @@ public class AircraftService {
                 .collect(Collectors.toList());
     }
 
-    private static List<String[]> getStaticData () {
+    /*private static List<String[]> getStaticData () {
         List<String[]> r = new LinkedList<>();
-        ;
+        int counter= 0;
         try (CSVReader reader = new CSVReader(new FileReader("dke_pr/staticData/aircraftDatabase.csv"))) {
             while (reader.readNext() != null) {
                 String[] i = reader.readNext();
-                if (i != null && i[0]!= null && i[1] != null && i[1].length() !=0) {
+                counter++;
+                if (i != null && i[0]!= null && i[1] != null && !i[1].isEmpty()) {
                             if ((i[1].charAt(0)=='D' && i[1].charAt(1) == '-')||(i[1].charAt(0) == 'O' && i[1].charAt(1) == 'E' && i[1].charAt(2) == '-') || (i[1].charAt(0) == 'C' && i[1].charAt(1) == 'H' && i[1].charAt(2) == '-')) {
                                 String[] values = new String[14];
                                 i[2]= i[2].replace(" ", "");i[2]= i[2].replace("'", "");
@@ -58,10 +63,47 @@ public class AircraftService {
         } catch (CsvException e) {
             e.printStackTrace();
         }
-        System.out.println(r.size());
         return r;
-    }
+    }*/
 
+    private static List<String[]> getStaticData (){
+        List<String[]> result= new LinkedList<>();
+            try {
+                FileReader filereader = new FileReader("dke_pr/staticData/aircraftDatabase.csv");
+                CSVReader csvReader = new CSVReaderBuilder(filereader)
+                        .withSkipLines(1)
+                        .build();
+                List<String[]> allData = csvReader.readAll();
+                System.out.println(allData.size());
+
+                for(String[] data : allData){
+                    if(data != null && data[1]!=null &&data[1].length()!=0){
+                        if((data[1].charAt(0)=='D'&&data[1].charAt(1)=='-')||(data[1].charAt(0)=='O'&&data[1].charAt(1)=='E'&&data[1].charAt(2)=='-')||(data[1].charAt(0)=='C'&&data[1].charAt(1)=='H'&&data[1].charAt(2)=='-')){
+                            data[2]= data[2].replace(" ", "");data[2]= data[2].replace("'", "");
+                            data[2]= data[2].replace("&", "AND");data[2]= data[2].replace("(", "");
+                            data[2]= data[2].replace(")", "");
+                            String[] values = new String[14];
+                            for(int l=0; l<7;l++) {
+                                values[l] = data[l];
+                            }
+                            values[7] = data[8];
+                            values[8] = data[13];
+                            values[9] = data[15];
+                            values[10] = data[16];
+                            values[11] = data[18];
+                            values[12] = data[21];
+                            values[13] = data[26];
+                            result.add(values);
+                        }
+                    }
+                }
+                System.out.println("testresultsize"+result.size());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+    }
 
     private static Model convertToModel(String[] r){
         Model model = ModelFactory.createDefaultModel();
