@@ -34,8 +34,11 @@ public abstract class StateService {
 
         Resource newState = model.createResource( RDFService.STATE_URL + state.getLastPositionUpdate() + state.getIcao24())
                 .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"State"))
-                .addProperty(model.createProperty(RDFService.PROPERTY_URL + "Aircraft"), model.createResource(RDFService.FLIGHT_URL + state.getIcao24()));
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL + "Aircraft")
+                        , model.createResource(RDFService.FLIGHT_URL + state.getIcao24()));
         RDFService.setProperty(newState, model, "Time", String.valueOf(state.getLastPositionUpdate()));
+        RDFService.setProperty(newState, model, "TimeLastContact", String.valueOf(state.getLastContact()));
+        RDFService.setProperty(newState, model, "CallSign", String.valueOf(state.getCallsign()));
         RDFService.setProperty(newState, model, "Country", state.getOriginCountry());
         RDFService.setProperty(newState, model, "Longitude", String.valueOf(state.getLongitude()));
         RDFService.setProperty(newState, model, "Latitude", String.valueOf(state.getLatitude()));

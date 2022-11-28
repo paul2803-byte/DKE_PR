@@ -28,9 +28,6 @@ public class App
         } else {
             System.out.println("Real data gets used.");
         }
-        // TODO: only read the static data if it has not been stored in the knowledge graph yet
-
-
 
         try {
             if(StorageService.checkIfStaticData()) {
@@ -44,7 +41,8 @@ public class App
             }
             askForNewStates(mockData, scanner);
         } catch (HttpException e) {
-            System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \n Then restart the application.");
+            System.out.println();
+            System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \nThen restart the application.");
         }
     }
 

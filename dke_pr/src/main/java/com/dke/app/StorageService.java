@@ -17,33 +17,34 @@ public class StorageService {
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
 
     public static void storeAircrafts(List<Model> aircrafts) throws HttpException {
+        RDFConnection server = RDFConnection.connect(SERVER);
         ProgressBar pb = new ProgressBar("Uploading Aircrafts", aircrafts.size());
         aircrafts.forEach(aircraft -> {
-            storeModel(aircraft, STATIC_GRAPH);
+            storeModel(aircraft, STATIC_GRAPH, server);
             pb.step();
         });
         pb.close();
     }
 
     public static void storeStates(List<Model> states) throws HttpException {
+        RDFConnection server = RDFConnection.connect(SERVER);
         ProgressBar pb = new ProgressBar("Uploading States", states.size());
         String dynamicLink = DYNAMIC_GRAPH + LocalDateTime.now();
         states.forEach(state -> {
-            storeModel(state, dynamicLink);
+            storeModel(state, dynamicLink, server);
             pb.step();
         });
         pb.close();
     }
 
-    private static void storeModel(Model model, String graphName) {
-        RDFConnection.connect(SERVER).load(graphName, model);
+    private static void storeModel(Model model, String graphName, RDFConnection server) {
+        server.load(graphName, model);
     }
 
     public static boolean checkIfStaticData() {
         try {
             return !RDFConnection.connect(SERVER).fetch(STATIC_GRAPH).isEmpty();
         } catch (Exception e){
-            System.out.println(e.getStackTrace());
             return false;
         }
     }
