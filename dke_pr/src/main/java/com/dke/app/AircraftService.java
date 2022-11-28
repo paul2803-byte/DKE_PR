@@ -34,7 +34,6 @@ public class AircraftService {
                         .withSkipLines(1)
                         .build();
                 List<String[]> allData = csvReader.readAll();
-                System.out.println(allData.size());
 
                 for(String[] data : allData){
                     if(data != null && data[1]!=null &&data[1].length()!=0){
@@ -57,7 +56,6 @@ public class AircraftService {
                         }
                     }
                 }
-                System.out.println("testresultsize"+result.size());
             }
             catch (Exception e) {
                 e.printStackTrace();
