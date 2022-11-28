@@ -24,6 +24,16 @@ ex:StateShape a sh:NodeShape ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
+            sh:path property:TimeLastContact ;
+            sh:maxCount 1 ;
+            sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+            sh:path property:CallSign ;
+            sh:maxCount 1 ;
+            sh:dataType xsd:string ;
+    ] ;
+    sh:property [
         sh:path property:Country ;
         sh:maxCount 1 ;
         sh:dataType xsd:string ;
