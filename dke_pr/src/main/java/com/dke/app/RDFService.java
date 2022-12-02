@@ -5,7 +5,8 @@ import org.apache.jena.rdf.model.Resource;
 
 public class RDFService {
 
-    static public final String FLIGHT_URL = "http://www.dke.uni-linz.ac.at/pr-dke/flight#";
+    static public final String AIRCRAFT_URL = "http://www.dke.uni-linz.ac.at/pr-dke/flight#";
+    static public final String TIME_STAMP_URL = "http://www.dke.uni-linz.ac.at/pr-dke/time_stamp#";
     static public final String EX_URL = "http://www.w3.org/2022/example#";
     static public final String STATE_URL = "http://www.dke.uni-linz.ac.at/pr-dke/state#";
     static public final String MANUFACTURER_URL = "http://www.dke.uni-linz.ac.at/pr-dke/manufacturer#";
@@ -24,9 +25,10 @@ public class RDFService {
     public static void setPrefixes(Model model) {
         model.setNsPrefix("ex", EX_URL);
         model.setNsPrefix("state", STATE_URL);
-        model.setNsPrefix("flight", FLIGHT_URL);
+        model.setNsPrefix("flight", AIRCRAFT_URL);
         model.setNsPrefix("rdf", RDF_URL);
         model.setNsPrefix("property", PROPERTY_URL);
         model.setNsPrefix("manufacturer", MANUFACTURER_URL);
+        model.setNsPrefix("time_stamp", TIME_STAMP_URL);
     }
 }
