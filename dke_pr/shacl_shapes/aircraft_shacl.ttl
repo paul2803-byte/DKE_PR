@@ -3,12 +3,12 @@
 @prefix ex: <http://www.w3.org/2022/example#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
-@prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix aircraft: <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#> .
 @prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
 
 
-ex:FlightShape a sh:NodeShape ;
-	sh:targetClass ex:Flight;
+ex:AircraftShape a sh:NodeShape ;
+	sh:targetClass ex:Aircraft;
 	sh:closed true ;
 	sh:property [
 	    sh:path rdf:type ;
@@ -77,7 +77,7 @@ ex:FlightShape a sh:NodeShape ;
       ];
     sh:property [
           sh:path property:manufacturer ;
-          sh:node ex:Manufacturer ;
+          sh:class ex:Manufacturer ;
           sh:maxCount 1;
       ].
 

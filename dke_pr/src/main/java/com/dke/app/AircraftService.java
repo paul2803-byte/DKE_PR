@@ -37,7 +37,7 @@ public class AircraftService {
 
                 for(String[] data : allData){
                     if(data != null && data[1]!=null &&data[1].length()!=0){
-                        if((data[1].charAt(0)=='D'&&data[1].charAt(1)=='-')||(data[1].charAt(0)=='O'&&data[1].charAt(1)=='E'&&data[1].charAt(2)=='-')||(data[1].charAt(0)=='C'&&data[1].charAt(1)=='H'&&data[1].charAt(2)=='-')){
+                        if(/*(data[1].charAt(0)=='D'&&data[1].charAt(1)=='-') ||*/(data[1].charAt(0)=='O'&&data[1].charAt(1)=='E'&&data[1].charAt(2)=='-')||(data[1].charAt(0)=='C'&&data[1].charAt(1)=='H'&&data[1].charAt(2)=='-')){
                             data[2]= data[2].replace(" ", "");data[2]= data[2].replace("'", "");
                             data[2]= data[2].replace("&", "AND");data[2]= data[2].replace("(", "");
                             data[2]= data[2].replace(")", "");
@@ -67,7 +67,7 @@ public class AircraftService {
         Model model = ModelFactory.createDefaultModel();
         RDFService.setPrefixes(model);
         Resource aircraft = model.createResource(RDFService.AIRCRAFT_URL+r[0])
-                    .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"));
+                    .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Aircraft"));
         RDFService.setProperty(aircraft, model, "icao24",r[0]);
         RDFService.setProperty(aircraft, model, "registration",r[1]);
         RDFService.setProperty(aircraft, model, "model",r[4]);
@@ -99,7 +99,7 @@ public class AircraftService {
         RDFService.setPrefixes(model);
 
         model.createResource(RDFService.AIRCRAFT_URL+ "111111")
-                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"))
+                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Aircraft"))
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Icao24"),"111111")
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Registration"),"whatever")
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Model"),"some Model")
