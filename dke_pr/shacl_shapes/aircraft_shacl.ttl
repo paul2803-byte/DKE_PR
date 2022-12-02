@@ -3,81 +3,81 @@
 @prefix ex: <http://www.w3.org/2022/example#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
-@prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix aircraft: <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#> .
 @prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
 
 
-ex:FlightShape a sh:NodeShape ;
-	sh:targetClass ex:Flight;
+ex:AircraftShape a sh:NodeShape ;
+	sh:targetClass ex:Aircraft;
 	sh:closed true ;
 	sh:property [
 	    sh:path rdf:type ;
 	] ;
 	sh:property [
-	    sh:path property:Icao24 ;
+	    sh:path property:icao24 ;
 	    sh:maxCount 1 ;
         sh:minCount 1 ;
         sh:dataType xsd:string ;
         sh:length 6;
     ] ;
     sh:property [
-          sh:path property:Registration ;
+          sh:path property:registration ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
      ] ;
     sh:property [
-          sh:path property:Model ;
+          sh:path property:model ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:Typecode ;
+          sh:path property:typecode ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:Serialnumber ;
+          sh:path property:serialnumber ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:IcaoAircraftType ;
+          sh:path property:icaoAircraftType ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:RegisteredSince ;
+          sh:path property:registeredSince ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:RegisteredUntil ;
+          sh:path property:registeredUntil ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:WasBuilt ;
+          sh:path property:wasBuilt ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:Description ;
+          sh:path property:description ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ] ;
     sh:property [
-          sh:path property:Engine ;
+          sh:path property:engine ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ];
     sh:property [
-          sh:path property:Owner ;
+          sh:path property:owner ;
           sh:datatype xsd:string ;
           sh:maxCount 1;
       ];
     sh:property [
-          sh:path property:Manufacturer ;
-          sh:node ex:Manufacturer ;
+          sh:path property:manufacturer ;
+          sh:class ex:Manufacturer ;
           sh:maxCount 1;
       ].
 
@@ -88,12 +88,12 @@ ex:Manufacturer a sh:NodeShape ;
     	    sh:path rdf:type ;
     ] ;
     sh:property [
-          sh:path property:ManufacturerIcao ;
+          sh:path property:manufacturerIcao ;
           sh:datatype xsd:string ;
           sh:minCount 1;
           sh:maxCount 1;
     ] ;
     sh:property [
-          sh:path property:ManufacturerName ;
+          sh:path property:manufacturerName ;
           sh:datatype xsd:string ;
     ] .

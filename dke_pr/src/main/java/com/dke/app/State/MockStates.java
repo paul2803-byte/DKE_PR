@@ -1,19 +1,25 @@
 package com.dke.app.State;
 
+import org.opensky.model.OpenSkyStates;
 import org.opensky.model.StateVector;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class MockStates extends StateService{
 
     @Override
-    public Collection<StateVector> getStateVectors() {
-        Collection<StateVector> mockData = new ArrayList<>();
+    public OpenSkyStates getStateVectors() {
+        Collection<StateVector> mockStates = new ArrayList<>();
         for(int i = 0; i < 20; i++) {
-            mockData.add(createMockedVector(i));
+            mockStates.add(createMockedVector(i));
         }
-        return mockData;
+        OpenSkyStates states = new OpenSkyStates();
+        states.setStates(mockStates);
+        states.setTime(Instant.now().getNano());
+        return states;
     }
 
     private StateVector createMockedVector(int i) {

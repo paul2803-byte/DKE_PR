@@ -4,6 +4,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
 @prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix timeStamp: <http://www.dke.uni-linz.ac.at/pr-dke/timeStamp#> .
 @prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
 
 
@@ -14,57 +15,86 @@ ex:StateShape a sh:NodeShape ;
         sh:path rdf:type
     ] ;
     sh:property [
-        sh:path property:Aircraft ;
-        sh:maxCount 1;
-        sh:minCount 1;
-    ] ;
-    sh:property [
-        sh:path property:Time ;
+        sh:path property:aircraft ;
         sh:maxCount 1 ;
-        sh:dataType xsd:float ;
+        sh:minCount 1 ;
+        sh:dataType ex:Flight ;
     ] ;
     sh:property [
-        sh:path property:Country ;
+        sh:path property:timeStamp ;
+        sh:maxCount 1 ;
+        sh:dataType ex:TimeStamp ;
+    ] ;
+    sh:property [
+                sh:path property:timeLastPos ;
+                sh:maxCount 1 ;
+                sh:dataType xsd:float ;
+        ] ;
+    sh:property [
+            sh:path property:timeLastContact ;
+            sh:maxCount 1 ;
+            sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+            sh:path property:callSign ;
+            sh:maxCount 1 ;
+            sh:dataType xsd:string ;
+    ] ;
+    sh:property [
+        sh:path property:country ;
         sh:maxCount 1 ;
         sh:dataType xsd:string ;
     ] ;
     sh:property [
-        sh:path property:Longitude ;
+        sh:path property:longitude ;
         sh:maxCount 1 ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
-        sh:path property:Latitude ;
+        sh:path property:latitude ;
         sh:maxCount 1 ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
-        sh:path property:AltitudeGeo ;
+        sh:path property:altitudeGeo ;
         sh:maxCount 1 ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
-        sh:path property:AltitudeBaro ;
+        sh:path property:altitudeBaro ;
         sh:maxCount 1 ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
-        sh:path property:OnGround ;
+        sh:path property:onGround ;
         sh:maxCount 1 ;
         sh:dataType xsd:boolean ;
     ] ;
     sh:property [
-        sh:path property:Velocity ;
+        sh:path property:velocity ;
         sh:maxCount 1 ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
-        sh:path property:Heading ;
+        sh:path property:heading ;
         sh:maxCount 1 ;
         sh:dataType xsd:float ;
     ] ;
     sh:property [
-        sh:path property:VerticalRateShape ;
+        sh:path property:verticalRateShape ;
         sh:maxCount 1 ;
+        sh:dataType xsd:float ;
+    ] .
+
+ex:TimeStampShape a sh:NodeShape ;
+    sh:targetClass ex:TimeStamp ;
+    sh:closed true ;
+    sh:property [
+            sh:path rdf:type
+    ] ;
+    sh:property [
+        sh:path property:time ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
         sh:dataType xsd:float ;
     ] .

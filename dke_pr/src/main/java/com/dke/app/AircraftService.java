@@ -37,7 +37,7 @@ public class AircraftService {
 
                 for(String[] data : allData){
                     if(data != null && data[1]!=null &&data[1].length()!=0){
-                        if((data[1].charAt(0)=='D'&&data[1].charAt(1)=='-')||(data[1].charAt(0)=='O'&&data[1].charAt(1)=='E'&&data[1].charAt(2)=='-')||(data[1].charAt(0)=='C'&&data[1].charAt(1)=='H'&&data[1].charAt(2)=='-')){
+                        if(/*(data[1].charAt(0)=='D'&&data[1].charAt(1)=='-') ||*/(data[1].charAt(0)=='O'&&data[1].charAt(1)=='E'&&data[1].charAt(2)=='-')||(data[1].charAt(0)=='C'&&data[1].charAt(1)=='H'&&data[1].charAt(2)=='-')){
                             data[2]= data[2].replace(" ", "");data[2]= data[2].replace("'", "");
                             data[2]= data[2].replace("&", "AND");data[2]= data[2].replace("(", "");
                             data[2]= data[2].replace(")", "");
@@ -66,26 +66,26 @@ public class AircraftService {
     private static Model convertToModel(String[] r){
         Model model = ModelFactory.createDefaultModel();
         RDFService.setPrefixes(model);
-        Resource aircraft = model.createResource(RDFService.FLIGHT_URL+r[0])
-                    .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"));
-        RDFService.setProperty(aircraft, model, "Icao24",r[0]);
-        RDFService.setProperty(aircraft, model, "Registration",r[1]);
-        RDFService.setProperty(aircraft, model, "Model",r[4]);
-        RDFService.setProperty(aircraft, model, "Typecode",r[5]);
-        RDFService.setProperty(aircraft, model, "Serialnumber",r[6]);
-        RDFService.setProperty(aircraft, model, "IcaoAircraftType",r[7]);
-        RDFService.setProperty(aircraft, model, "Owner",r[8]);
-        RDFService.setProperty(aircraft, model, "RegisteredSince",r[9]);
-        RDFService.setProperty(aircraft, model, "RegisteredUntil",r[10]);
-        RDFService.setProperty(aircraft, model, "WasBuilt",r[11]);
-        RDFService.setProperty(aircraft, model, "Engine",r[12]);
-        RDFService.setProperty(aircraft, model, "Description",r[13]);
+        Resource aircraft = model.createResource(RDFService.AIRCRAFT_URL+r[0])
+                    .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Aircraft"));
+        RDFService.setProperty(aircraft, model, "icao24",r[0]);
+        RDFService.setProperty(aircraft, model, "registration",r[1]);
+        RDFService.setProperty(aircraft, model, "model",r[4]);
+        RDFService.setProperty(aircraft, model, "typecode",r[5]);
+        RDFService.setProperty(aircraft, model, "serialnumber",r[6]);
+        RDFService.setProperty(aircraft, model, "icaoAircraftType",r[7]);
+        RDFService.setProperty(aircraft, model, "owner",r[8]);
+        RDFService.setProperty(aircraft, model, "registeredSince",r[9]);
+        RDFService.setProperty(aircraft, model, "registeredUntil",r[10]);
+        RDFService.setProperty(aircraft, model, "wasBuilt",r[11]);
+        RDFService.setProperty(aircraft, model, "engine",r[12]);
+        RDFService.setProperty(aircraft, model, "description",r[13]);
         if(r[2] != null && !r[2].equals("")) {
             Resource manufacturer = model.createResource(RDFService.MANUFACTURER_URL+r[2])
                     .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Manufacturer"));
-            RDFService.setProperty(manufacturer, model, "ManufacturerIcao", r[2]);
-            RDFService.setProperty(manufacturer, model, "ManufacturerName", r[3]);
-            model.add(model.createStatement(aircraft, model.createProperty(RDFService.PROPERTY_URL +"Manufacturer"), manufacturer));
+            RDFService.setProperty(manufacturer, model, "manufacturerIcao", r[2]);
+            RDFService.setProperty(manufacturer, model, "manufacturerName", r[3]);
+            model.add(model.createStatement(aircraft, model.createProperty(RDFService.PROPERTY_URL + "manufacturer"), manufacturer));
         }
 
         return model;
@@ -98,8 +98,8 @@ public class AircraftService {
 
         RDFService.setPrefixes(model);
 
-        model.createResource(RDFService.FLIGHT_URL+ "111111")
-                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Flight"))
+        model.createResource(RDFService.AIRCRAFT_URL+ "111111")
+                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL + "Aircraft"))
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Icao24"),"111111")
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Registration"),"whatever")
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"Model"),"some Model")
