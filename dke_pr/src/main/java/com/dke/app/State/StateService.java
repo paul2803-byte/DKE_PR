@@ -38,7 +38,7 @@ public abstract class StateService {
         Model model = ModelFactory.createDefaultModel();
 
         RDFService.setPrefixes(model);
-
+// TODO: change the used time not getLastPosition
         Resource newState = model.createResource( RDFService.STATE_URL + state.getLastPositionUpdate() + state.getIcao24())
                 .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"State"))
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL + "aircraft"),
@@ -46,18 +46,18 @@ public abstract class StateService {
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL + "timeStamp"),
                         model.createResource(RDFService.TIME_STAMP_URL + timeStamp));
         RDFService.setProperty(newState, model, "timeLastPos", String.valueOf(state.getLastPositionUpdate()));
+        RDFService.setProperty(newState, model, "icao", state.getIcao24());
         RDFService.setProperty(newState, model, "timeLastContact", String.valueOf(state.getLastContact()));
         RDFService.setProperty(newState, model, "callSign", String.valueOf(state.getCallsign()));
         RDFService.setProperty(newState, model, "country", state.getOriginCountry());
-        RDFService.setProperty(newState, model, "longitude", String.valueOf(state.getLongitude()));
-        RDFService.setProperty(newState, model, "latitude", String.valueOf(state.getLatitude()));
+        RDFService.setProperty(newState, model, "longitude", state.getLongitude());
+        RDFService.setProperty(newState, model, "latitude", state.getLatitude());
         RDFService.setProperty(newState, model, "altitudeGeo", String.valueOf(state.getGeoAltitude()));
         RDFService.setProperty(newState, model, "altitudeBaro", String.valueOf(state.getBaroAltitude()));
         RDFService.setProperty(newState, model, "onGround", String.valueOf(state.isOnGround()));
         RDFService.setProperty(newState, model, "heading", String.valueOf(state.getHeading()));
         RDFService.setProperty(newState, model, "verticalRateShape", String.valueOf(state.getVerticalRate()));
         RDFService.setProperty(newState, model, "velocity", String.valueOf(state.getVelocity()));
-
         return model;
     }
 

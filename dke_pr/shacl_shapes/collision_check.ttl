@@ -1,0 +1,89 @@
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
+@prefix collision: <http://www.dke.uni-linz.ac.at/pr-dke/collision#> .
+@prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix timeStamp: <http://www.dke.uni-linz.ac.at/pr-dke/timeStamp#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:CollisionShape a sh:NodeShape ;
+    sh:targetClass ex:State ;
+    sh:rule [
+        a sh:SPARQLRule ;
+        sh:prefixes ex:, rdf:, property: ;
+        sh:construct """
+            PREFIX ex: <http://www.w3.org/2022/example#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
+            PREFIX collision: <http://www.dke.uni-linz.ac.at/pr-dke/collision#>
+            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            CONSTRUCT {
+                 ?var
+                     rdf:type ex:Collision ;
+                     property:lats ?lat1, ?lat2 ;
+                     property:longs ?long1, ?long2 ;
+                     property:onGround ?onGround1, ?onGround2 .
+            }
+            WHERE {
+                 $this a ex:State ;
+                     property:latitude ?lat1 ;
+                     property:longitude ?long1 ;
+                     property:icao ?icao1 ;
+                     property:onGround ?onGround1 .
+                 ?otherState a ex:State ;
+                     property:latitude ?lat2 ;
+                     property:longitude ?long2 ;
+                     property:icao ?icao2 ;
+                     property:onGround ?onGround2 .
+                 FILTER(?icao1 > ?icao2
+                        && ?onGround1 != "true"
+                        && ?onGround2 != "true"
+                        && isNumeric(?lat1)
+                        && isNumeric(?lat2)
+                        && isNumeric(?long1)
+                        && isNumeric(?long2)
+                        && (($lat1 - $lat2) * ($lat1 - $lat2)
+                           + ($long1 - $long2) * ($long1 - $long2))
+                           < 0.01 )
+                 BIND( uri(concat(str(collision:), str(?icao1), str(?icao2))) as ?var )
+            }
+        """
+    ] ;
+.
+
+ex:close a sh:SPARQLFunction ;
+    rdfs:comment "Check whether two flights are close to each other" ;
+    sh:returnType xsd:boolean ;
+    sh:parameter [
+        sh:path ex:icao1 ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:parameter [
+        sh:path ex:icao2 ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:parameter [
+        sh:path ex:onGround1 ;
+        sh:datatype xsd:boolean ;
+    ] ;
+    sh:parameter [
+        sh:path ex:onGround2 ;
+        sh:datatype xsd:boolean ;
+    ] ;
+    sh:parameter [
+        sh:path ex:lat1 ;
+        sh:datatype xsd:double ;
+    ] ;
+    sh:select """
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        SELECT (
+            $icao1 < $icao2
+            && $onGround1 != "true"
+            && $onGround2 != "true"
+            AS ?result
+        )
+        WHERE {}
+    """ .
