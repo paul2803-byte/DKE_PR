@@ -72,6 +72,9 @@ public class App
         } else {
             stateService = new RealStates();
         }
-        StorageService.storeStates(stateService.getStates());
+        List<Model> states = stateService.getStates();
+        // applying the checks for WP2 here
+        ValidationService.checkForCollisions(states);
+        // StorageService.storeStates(states);
     }
 }

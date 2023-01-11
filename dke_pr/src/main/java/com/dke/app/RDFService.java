@@ -22,6 +22,15 @@ public class RDFService {
         }
     }
 
+    public static void setProperty(Resource resource, Model model, String name, double value) {
+        if (value != 0) {
+            resource.addLiteral(
+                    model.createProperty(PROPERTY_URL + name),
+                    value
+            );
+        }
+    }
+
     public static void setPrefixes(Model model) {
         model.setNsPrefix("ex", EX_URL);
         model.setNsPrefix("state", STATE_URL);

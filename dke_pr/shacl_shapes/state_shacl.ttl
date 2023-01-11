@@ -41,6 +41,12 @@ ex:StateShape a sh:NodeShape ;
             sh:dataType xsd:string ;
     ] ;
     sh:property [
+                sh:path property:icao ;
+                sh:maxCount 1 ;
+                sh:minCount 1 ;
+                sh:dataType xsd:string ;
+        ] ;
+    sh:property [
         sh:path property:country ;
         sh:maxCount 1 ;
         sh:dataType xsd:string ;
