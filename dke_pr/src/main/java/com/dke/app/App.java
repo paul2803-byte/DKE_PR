@@ -54,7 +54,7 @@ public class App
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
-                storeStates(mockData);
+                storeStates(mockData, scanner);
                 System.out.println("New states got stored");
             } else if (input.equals("e")){
                 System.out.println("Exiting the application");
@@ -65,7 +65,7 @@ public class App
         }
     }
 
-    private static void storeStates(boolean mockData) throws HttpException{
+    private static void storeStates(boolean mockData, Scanner scanner) throws HttpException{
         StateService stateService;
         if (mockData) {
             stateService = new MockStates();
@@ -74,7 +74,23 @@ public class App
         }
         List<Model> states = stateService.getStates();
         // applying the checks for WP2 here
-        ValidationService.checkForCollisions(states);
+        checkForCollision(states, scanner);
         // StorageService.storeStates(states);
+    }
+
+    private static void checkForCollision(List<Model> states, Scanner scanner) {
+        double distance = 0;
+        while(true) {
+            System.out.print("Enter under which distance of two flights a warning should be given out: ");
+            String input = scanner.nextLine();
+            try {
+                distance = Double.parseDouble(input);
+                break;
+            } catch (Exception e) {
+                System.out.println("Please type in a valid distance in the double format!");
+            }
+        }
+        Model collisions = CollisionService.checkForCollisions(states, distance);
+        StorageService.storeCollisionEvents(collisions);
     }
 }

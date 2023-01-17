@@ -12,9 +12,11 @@ import java.util.List;
 
 public class StorageService {
 
-    private static final String SERVER = "http://localhost:3030/flight_database/";
+    public static final String SERVER = "http://localhost:3030/flight_database/";
     private static final String STATIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/static_graph";
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
+    private static final String COLLISION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/collision_graph/";
+    private static String lastCollisionUpdate;
 
     public static void storeAircrafts(List<Model> aircrafts) throws HttpException {
         RDFConnection server = RDFConnection.connect(SERVER);
@@ -37,6 +39,14 @@ public class StorageService {
         pb.close();
     }
 
+    public static void storeCollisionEvents(Model events) {
+        RDFConnection server = RDFConnection.connect(SERVER);
+        String time = LocalDateTime.now().toString();
+        String link = COLLISION_GRAPH + time;
+        lastCollisionUpdate = time;
+        storeModel(events, link, server);
+    }
+
     private static void storeModel(Model model, String graphName, RDFConnection server) {
         server.load(graphName, model);
     }
@@ -47,5 +57,14 @@ public class StorageService {
         } catch (Exception e){
             return false;
         }
+    }
+
+    public static String getLastCollisionURL() {
+        if(lastCollisionUpdate != null) {
+            return COLLISION_GRAPH + lastCollisionUpdate;
+        } else {
+            return null;
+        }
+
     }
 }
