@@ -77,5 +77,22 @@ public class ValidationService {
         // Print violations
         RDFDataMgr.write(System.out, report, Lang.TTL);
     }
+
+    public static void checkNumber(List<Model> modelList) {
+        String SHAPE = "dke_pr/shacl_shapes/NumberFlights.ttl";
+        Model shapesModel = RDFDataMgr.loadModel(SHAPE);
+        // RDFDataMgr.write(System.out, shapesModel, Lang.TTL);
+
+        Model dataModel = ModelFactory.createDefaultModel();
+        modelList.stream().forEach(model -> dataModel.add(model));
+        // RDFDataMgr.write(System.out, allStates, Lang.TTL);
+
+        // Perform the validation of everything, using the data model
+        // also as the shapes model - you may have them separated
+        Model report = RuleUtil.executeRules(dataModel, shapesModel, null, null);
+
+        // Print violations
+        RDFDataMgr.write(System.out, report, Lang.TTL);
+    }
     
 }

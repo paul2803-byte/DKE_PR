@@ -72,9 +72,14 @@ public class App
         } else {
             stateService = new RealStates();
         }
-        List<Model> states = stateService.getStates();
+ //       List<Model> states = stateService.getStates();
         // applying the checks for WP2 here
-        ValidationService.checkForCollisions(states);
+ //       ValidationService.checkForCollisions(states);
         // StorageService.storeStates(states);
+
+        System.out.println("----------------------------------------------------");
+        List<Model> aircrafts = AircraftService.getAircrafts();
+        //System.out.println(aircrafts);
+        ValidationService.checkNumber(aircrafts);
     }
 }
