@@ -9,10 +9,11 @@ import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
 import org.apache.jena.shacl.ValidationReport;
 import org.topbraid.shacl.rules.RuleUtil;
-import org.apache.jena.util.FileUtils;
-import org.topbraid.jenax.util.JenaUtil;
-import org.topbraid.shacl.util.ModelPrinter;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class ValidationService {
@@ -49,33 +50,4 @@ public class ValidationService {
             return false;
         }
     }
-
-    /*
-    Offene Fragen
-
-        Fehler beim Anwenden des Shacl Shapes: "Value must be an instance of rdfs:Class"
-        Wo wird durch construct erzeugt, wie kann erzeugtes Model abgefragt werden
-        dynamisches Setzen der distance: kann aus einem String ein Model erzeugt werden oder muss gelesen eingesetzt in File geschrieben und dann Model erzeugt werden
-        ByteOutput Stream
-     */
-
-    // TODO: abklären warum shacl Funktion nicht funktioniert: sonst funktioniert die Query auch ohne Funktion ist aber anders schöner
-    public static void checkForCollisions(List<Model> modelList) {
-
-        String SHAPE = "dke_pr/shacl_shapes/collision_check.ttl";
-        Model shapesModel = RDFDataMgr.loadModel(SHAPE);
-        // RDFDataMgr.write(System.out, shapesModel, Lang.TTL);
-
-        Model dataModel = ModelFactory.createDefaultModel();
-        modelList.stream().forEach(model -> dataModel.add(model));
-        // RDFDataMgr.write(System.out, allStates, Lang.TTL);
-
-        // Perform the validation of everything, using the data model
-        // also as the shapes model - you may have them separated
-        Model report = RuleUtil.executeRules(dataModel, shapesModel, null, null);
-
-        // Print violations
-        RDFDataMgr.write(System.out, report, Lang.TTL);
-    }
-    
 }

@@ -22,6 +22,8 @@ ex:CollisionShape a sh:NodeShape ;
             CONSTRUCT {
                  ?var
                      rdf:type ex:Collision ;
+                     property:lats ?lat1, ?lat2 ;
+                     property:longs ?long1, ?long2 ;
                      property:aircraft1 ?icao1;
                      property:aircraft2 ?icao2;
                      property:squaredDistanceInDegree ?distance ;
@@ -131,7 +133,7 @@ ex:close a sh:SPARQLFunction ;
             && isNumeric($long2)
             && (($lat1 - $lat2) * ($lat1 - $lat2)
                + ($long1 - $long2) * ($long1 - $long2))
-               < /*distance*/ AS ?result
+               < 0.0256 AS ?result
         )
         WHERE {}
     """ .
