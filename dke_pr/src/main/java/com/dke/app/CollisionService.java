@@ -1,5 +1,8 @@
 package com.dke.app;
 
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdfconnection.RDFConnection;
@@ -15,30 +18,15 @@ import java.util.List;
 
 public class CollisionService {
 
-
-
-    /*
-    Offene Fragen
-
-        dynamisches Setzen der distance: kann aus einem String ein Model erzeugt werden oder muss gelesen eingesetzt in File geschrieben und dann Model erzeugt werden
-        ByteOutput Stream
-     */
-
-    // TODO: abklären warum shacl Funktion nicht funktioniert: sonst funktioniert die Query auch ohne Funktion ist aber anders schöner
-    public static Model checkForCollisions(List<Model> modelList, double distance) {
+     public static Model checkForCollisions(List<Model> modelList, double distance) {
 
         Model shapesModel = getShapeModel(distance);
-        System.out.println(modelList.size());
-        // RDFDataMgr.write(System.out, shapesModel, Lang.TTL);
         Model dataModel = ModelFactory.createDefaultModel();
         modelList.stream().forEach(model -> dataModel.add(model));
         dataModel.add(getLastCollisionEvents());
 
-        // Perform the validation of everything, using the data model
-        // also as the shapes model - you may have them separated
         Model report = RuleUtil.executeRules(dataModel, shapesModel, null, null);
 
-        // Print violations
         RDFDataMgr.write(System.out, report, Lang.TTL);
 
         return report;
@@ -50,7 +38,7 @@ public class CollisionService {
         Path path = Paths.get(SHAPE);
         Path newPath = Paths.get(NEW_SHAPE);
 
-        String content = null;
+        String content;
         try {
             content = Files.readString(path);
         } catch (IOException e) {
@@ -72,14 +60,36 @@ public class CollisionService {
     }
 
     private static Model getLastCollisionEvents() {
-        String lastCollision = StorageService.getLastCollisionURL();
+        String lastCollision = getLastCollisionLink();
         if(lastCollision != null) {
             RDFConnection server = RDFConnection.connect(StorageService.SERVER);
-            Model collision =  server.fetch(lastCollision);
-            RDFDataMgr.write(System.out, collision, Lang.TTL);
-            return collision;
+            try {
+                Model collision =  server.fetch(lastCollision);
+                return collision;
+            } catch (Exception e){
+                System.out.println("Could not fetch last Collision Graph. Checks concerning converging are not possible");
+                return ModelFactory.createDefaultModel();
+            }
+
         } else {
             return ModelFactory.createDefaultModel();
         }
+    }
+
+    private static String getLastCollisionLink() {
+        RDFConnection server = RDFConnection.connect(StorageService.SERVER);
+        QueryExecution execution = server.query("PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> \n" +
+                "PREFIX ex: <http://www.w3.org/2022/example#>\n" +
+                "PReFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "SELECT ?url WHERE {\n" +
+                "  ?collisionGraph a ex:CollisionGraph ;\n" +
+                "  \tproperty:url ?url ;\n" +
+                "  \tproperty:time ?time.\n" +
+                "} ORDER BY DESC(xsd:dateTime(?time)) LIMIT 1");
+        ResultSet results = execution.execSelect();
+        if(results.hasNext()) {
+            QuerySolution solution = results.nextSolution();
+            return solution.get("url").toString();
+        } else return null;
     }
 }

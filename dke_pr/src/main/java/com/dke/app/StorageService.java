@@ -1,10 +1,12 @@
 package com.dke.app;
 
 import me.tongfei.progressbar.ProgressBar;
-import me.tongfei.progressbar.ProgressBarStyle;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdfconnection.RDFConnection;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDF;
 
 import java.time.LocalDateTime;
@@ -16,7 +18,6 @@ public class StorageService {
     private static final String STATIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/static_graph";
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
     private static final String COLLISION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/collision_graph/";
-    private static String lastCollisionUpdate;
 
     public static void storeAircrafts(List<Model> aircrafts) throws HttpException {
         RDFConnection server = RDFConnection.connect(SERVER);
@@ -43,8 +44,8 @@ public class StorageService {
         RDFConnection server = RDFConnection.connect(SERVER);
         String time = LocalDateTime.now().toString();
         String link = COLLISION_GRAPH + time;
-        lastCollisionUpdate = time;
-        storeModel(events, link, server);
+        // storeCollisionGraph(link, time);
+        // storeModel(events, link, server);
     }
 
     private static void storeModel(Model model, String graphName, RDFConnection server) {
@@ -59,12 +60,13 @@ public class StorageService {
         }
     }
 
-    public static String getLastCollisionURL() {
-        if(lastCollisionUpdate != null) {
-            return COLLISION_GRAPH + lastCollisionUpdate;
-        } else {
-            return null;
-        }
-
+    private static void storeCollisionGraph(String url, String time) {
+        Model model = ModelFactory.createDefaultModel();
+        model.createResource(url)
+                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"CollisionGraph"))
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"time"), time)
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"url"), url);
+        RDFConnection server = RDFConnection.connect(SERVER);
+        server.load(model);
     }
 }

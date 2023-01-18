@@ -21,13 +21,5 @@ public class RealStates extends StateService{
         }
         // filtering the states to only get the ones over austria
         return allStates;
-        /*return allStates.stream()
-                .filter(state -> (state.getLongitude() != null &&
-                        state.getLatitude() != null &&
-                        state.getLatitude() < 49.01 &&
-                        state.getLatitude() > 46.22 &&
-                        state.getLongitude() > 9.32 &&
-                        state.getLongitude() < 17.1))
-                .collect(Collectors.toList());*/
     }
 }

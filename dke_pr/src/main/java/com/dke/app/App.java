@@ -13,21 +13,10 @@ public class App
 {
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
-        // check if the states should be read through real or mock data
-        System.out.print("Should real or mock data be used? Type in m for mock or r for real: ");
-        String input = scanner.nextLine();
-        while (!input.equals("r") && !input.equals("m")) {
-            System.out.print("Not a valid option. Type in m for mock data or r for real data: ");
-            input = scanner.nextLine();
-        }
-        boolean mockData = input.equals("m");
 
-        // inform the user about the mode
-        if (mockData) {
-            System.out.println("Mock data gets used.");
-        } else {
-            System.out.println("Real data gets used.");
-        }
+        boolean mockData = askForDataType(scanner);
+
+        double collisionLimit = askForCollisionDistance(scanner);
 
         try {
             if(StorageService.checkIfStaticData()) {
@@ -39,33 +28,50 @@ public class App
                 StorageService.storeAircrafts(aircraft);
                 System.out.println("Static data got stored");
             }
-            askForNewStates(mockData, scanner);
+            askForNewStates(mockData, collisionLimit, scanner);
         } catch (HttpException e) {
             System.out.println();
             System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \nThen restart the application.");
         }
     }
 
+    private static boolean askForDataType(Scanner scanner) {
+        System.out.print("Should real or mock data be used? Type in m for mock or r for real: ");
+        String input = scanner.nextLine();
+        while (!input.equals("r") && !input.equals("m")) {
+            System.out.print("Not a valid option. Type in m for mock data or r for real data: ");
+            input = scanner.nextLine();
+        }
+        boolean mockData = input.equals("m");
+        if (mockData) {
+            System.out.println("Mock data gets used.");
+        } else {
+            System.out.println("Real data gets used.");
+        }
+        return mockData;
+    }
 
 
-    private static void askForNewStates(boolean mockData, Scanner scanner)  throws HttpException{
+    private static void askForNewStates(boolean mockData, double collisionLimit, Scanner scanner)  throws HttpException{
         while(true) {
-            System.out.print("Enter r to read new states or e to exit: ");
+            System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \nenter your input: ");
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
-                storeStates(mockData, scanner);
+                storeStates(mockData, collisionLimit, scanner);
                 System.out.println("New states got stored");
             } else if (input.equals("e")){
                 System.out.println("Exiting the application");
                 break;
+            } else if(input.equals("c")) {
+                collisionLimit = askForCollisionDistance(scanner);
             } else {
                 System.out.println("Symbol not found");
             }
         }
     }
 
-    private static void storeStates(boolean mockData, Scanner scanner) throws HttpException{
+    private static void storeStates(boolean mockData, double collisionLimit, Scanner scanner) throws HttpException{
         StateService stateService;
         if (mockData) {
             stateService = new MockStates();
@@ -73,12 +79,12 @@ public class App
             stateService = new RealStates();
         }
         List<Model> states = stateService.getStates();
-        // applying the checks for WP2 here
-        checkForCollision(states, scanner);
+
+        checkForCollision(states, collisionLimit);
         // StorageService.storeStates(states);
     }
 
-    private static void checkForCollision(List<Model> states, Scanner scanner) {
+    private static double askForCollisionDistance(Scanner scanner) {
         double distance = 0;
         while(true) {
             System.out.print("Enter under which distance of two flights a warning should be given out: ");
@@ -90,7 +96,11 @@ public class App
                 System.out.println("Please type in a valid distance in the double format!");
             }
         }
-        Model collisions = CollisionService.checkForCollisions(states, distance);
+        return distance;
+    }
+
+    private static void checkForCollision(List<Model> states, double collisionLimit) {
+        Model collisions = CollisionService.checkForCollisions(states, collisionLimit);
         StorageService.storeCollisionEvents(collisions);
     }
 }

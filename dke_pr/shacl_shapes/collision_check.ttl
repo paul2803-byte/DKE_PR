@@ -19,12 +19,13 @@ ex:CollisionShape a sh:NodeShape ;
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
             PREFIX collision: <http://www.dke.uni-linz.ac.at/pr-dke/collision#>
+            PREFIX math: <http://www.w3.org/2005/xpath-functions/math#>
             CONSTRUCT {
                  ?var
                      rdf:type ex:Collision ;
                      property:aircraft1 ?icao1;
                      property:aircraft2 ?icao2;
-                     property:squaredDistanceInDegree ?distance ;
+                     property:distance ?distanceMeter ;
                      property:time ?time ;
                      property:converging ?converging .
             }
@@ -43,8 +44,10 @@ ex:CollisionShape a sh:NodeShape ;
                      property:time ?time .
                  FILTER( ex:close(?icao1, ?icao2, ?lat1, ?lat2, ?long1, ?long2, ?onGround1, ?onGround2) )
                  BIND( (($lat1 - $lat2) * ($lat1 - $lat2) + ($long1 - $long2) * ($long1 - $long2)) AS ?distance )
-                 BIND( ex:development(?icao1, ?icao2, ?distance) AS ?converging )
+                 BIND( math:sqrt(?distance) / 0.008 AS ?distanceMeter )
+                 BIND( ex:development(?icao1, ?icao2, ?distanceMeter) AS ?converging )
                  BIND( uri(concat(str(collision:), str(?icao1), str(?icao2), str(?time))) as ?var )
+
             }
         """
     ] ;
@@ -70,11 +73,11 @@ ex:development a sh:SPARQLFunction ;
         PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
         PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
         SELECT (
-            (?dist > $distance) AS ?result
+            ?dist > $distance   AS ?result
         )
         WHERE {
             ?collision a ex:Collision ;
-                property:squaredDistanceInDegree ?dist ;
+                property:distance ?dist ;
                 property:aircraft1 ?first ;
                 property:aircraft2 ?second .
             FILTER (
