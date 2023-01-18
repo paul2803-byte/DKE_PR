@@ -51,7 +51,7 @@ ex:isOwner a sh:SPARQLFunction ;
     sh:select """
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         SELECT (
-            $own = 'Austrian'
+            $own = 'Private'
             AS ?result
         )
         WHERE {}
