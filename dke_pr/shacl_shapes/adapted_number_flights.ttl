@@ -1,0 +1,58 @@
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owners: <http://www.dke.uni-linz.ac.at/pr-dke/owners#> .
+@prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix aircraft:     <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#> .
+
+ex:NumberFlightsShape a sh:NodeShape ;
+    sh:targetClass ex:Aircraft ;
+    sh:rule [
+        a sh:SPARQLRule ;
+        sh:prefixes ex:, rdf:, property: ;
+        sh:construct """
+            PREFIX ex: <http://www.w3.org/2022/example#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
+            PREFIX owners: <http://www.dke.uni-linz.ac.at/pr-dke/owners#>
+            Prefix aircraft:     <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#>
+            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            CONSTRUCT {
+                 ?var rdf:type ex:Owners ;
+                 property:NumberOfAircrafts ?count ;
+                 property:ForOwner ?own2.
+            }
+            WHERE {
+                 SELECT (COUNT(DISTINCT ?icao) as ?count) ("2" as ?own2) (<http://www.dke.uni-linz.ac.at/pr-dke/owners/2> as ?var)
+                     WHERE {
+                         ?aFlight a ex:Aircraft ;
+                         property:owner ?own ;
+                         property:icao24 ?icao .
+                         FILTER (ex:isOwner(?icao, ?own) = true)
+                     }
+            }
+        """
+    ] ;
+.
+
+ex:isOwner a sh:SPARQLFunction ;
+    sh:returnType xsd:boolean ;
+    sh:parameter [
+        sh:path ex:icao ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:parameter [
+        sh:path ex:own ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:select """
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        SELECT (
+            $own = '2'
+            AS ?result
+        )
+        WHERE {}
+    """ .

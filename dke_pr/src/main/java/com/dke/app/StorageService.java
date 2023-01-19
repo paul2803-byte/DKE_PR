@@ -15,7 +15,7 @@ import java.util.List;
 public class StorageService {
 
     public static final String SERVER = "http://localhost:3030/flight_database/";
-    private static final String STATIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/static_graph";
+    public static final String STATIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/static_graph";
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
     private static final String COLLISION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/collision_graph/";
 
