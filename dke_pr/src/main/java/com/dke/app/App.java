@@ -16,6 +16,10 @@ public class App
 
         boolean mockData = askForDataType(scanner);
 
+        String owner = askForOwner(scanner);
+
+        NumberFlightService.getFlightsPerOwner(owner);
+
         double collisionLimit = askForCollisionDistance(scanner);
 
         try {
@@ -28,7 +32,7 @@ public class App
                 StorageService.storeAircrafts(aircraft);
                 System.out.println("Static data got stored");
             }
-            askForNewStates(mockData, collisionLimit, scanner);
+            askForNewStates(mockData, collisionLimit, owner, scanner);
         } catch (HttpException e) {
             System.out.println();
             System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \nThen restart the application.");
@@ -52,13 +56,13 @@ public class App
     }
 
 
-    private static void askForNewStates(boolean mockData, double collisionLimit, Scanner scanner)  throws HttpException{
+    private static void askForNewStates(boolean mockData, double collisionLimit, String owner, Scanner scanner)  throws HttpException{
         while(true) {
             System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \nenter your input: ");
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
-                storeStates(mockData, collisionLimit, scanner);
+                storeStates(mockData, collisionLimit, owner, scanner);
                 System.out.println("New states got stored");
             } else if (input.equals("e")){
                 System.out.println("Exiting the application");
@@ -71,7 +75,7 @@ public class App
         }
     }
 
-    private static void storeStates(boolean mockData, double collisionLimit, Scanner scanner) throws HttpException{
+    private static void storeStates(boolean mockData, double collisionLimit, String owner, Scanner scanner) throws HttpException{
         StateService stateService;
         if (mockData) {
             stateService = new MockStates();
@@ -97,6 +101,11 @@ public class App
             }
         }
         return distance;
+    }
+
+    private static String askForOwner(Scanner scanner) {
+        System.out.println("Please enter the owner for which you want to retrieve the number of aircraft");
+        return scanner.nextLine();
     }
 
     private static void checkForCollision(List<Model> states, double collisionLimit) {

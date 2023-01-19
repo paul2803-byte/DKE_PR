@@ -48,11 +48,9 @@ public class CollisionService {
         try {
             Files.writeString(newPath, content);
         } catch (IOException e) {
-            System.out.println(e);
             throw new RuntimeException(e);
         }
-        Model model = RDFDataMgr.loadModel(NEW_SHAPE);
-        return model;
+        return RDFDataMgr.loadModel(NEW_SHAPE);
     }
 
     private static double calculateDistance(double input) {
