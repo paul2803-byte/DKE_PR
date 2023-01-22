@@ -32,7 +32,7 @@ public class App
                 StorageService.storeAircrafts(aircraft);
                 System.out.println("Static data got stored");
             }
-            askForNewStates(mockData, collisionLimit, owner, scanner);
+            askForNewStates(mockData, collisionLimit, scanner);
         } catch (HttpException e) {
             System.out.println();
             System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \nThen restart the application.");
@@ -56,13 +56,13 @@ public class App
     }
 
 
-    private static void askForNewStates(boolean mockData, double collisionLimit, String owner, Scanner scanner)  throws HttpException{
+    private static void askForNewStates(boolean mockData, double collisionLimit, Scanner scanner)  throws HttpException{
         while(true) {
             System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \nenter your input: ");
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
-                storeStates(mockData, collisionLimit, owner, scanner);
+                storeStates(mockData, collisionLimit);
                 System.out.println("New states got stored");
             } else if (input.equals("e")){
                 System.out.println("Exiting the application");
@@ -75,7 +75,7 @@ public class App
         }
     }
 
-    private static void storeStates(boolean mockData, double collisionLimit, String owner, Scanner scanner) throws HttpException{
+    private static void storeStates(boolean mockData, double collisionLimit) throws HttpException{
         StateService stateService;
         if (mockData) {
             stateService = new MockStates();
@@ -104,7 +104,7 @@ public class App
     }
 
     private static String askForOwner(Scanner scanner) {
-        System.out.println("Please enter the owner for which you want to retrieve the number of aircraft");
+        System.out.print("Please enter the owner for which you want to retrieve the number of aircraft: ");
         return scanner.nextLine();
     }
 

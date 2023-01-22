@@ -44,8 +44,8 @@ public class StorageService {
         RDFConnection server = RDFConnection.connect(SERVER);
         String time = LocalDateTime.now().toString();
         String link = COLLISION_GRAPH + time;
-        // storeCollisionGraph(link, time);
-        // storeModel(events, link, server);
+        storeCollisionGraph(link, time);
+        storeModel(events, link, server);
     }
 
     private static void storeModel(Model model, String graphName, RDFConnection server) {
