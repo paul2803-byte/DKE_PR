@@ -8,23 +8,25 @@
 @prefix timeStamp: <http://www.dke.uni-linz.ac.at/pr-dke/timeStamp#> .
 @prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix aircraft: <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#> .
 
 ex:CollisionShape a sh:NodeShape ;
     sh:targetClass ex:State ;
     sh:rule [
         a sh:SPARQLRule ;
-        sh:prefixes ex:, rdf:, property: ;
+        sh:prefixes ex:, rdf:, property:, aircraft: ;
         sh:construct """
             PREFIX ex: <http://www.w3.org/2022/example#>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
             PREFIX collision: <http://www.dke.uni-linz.ac.at/pr-dke/collision#>
             PREFIX math: <http://www.w3.org/2005/xpath-functions/math#>
+            PREFIX aircraft: <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#>
             CONSTRUCT {
                  ?var
                      rdf:type ex:Collision ;
-                     property:aircraft1 ?icao1;
-                     property:aircraft2 ?icao2;
+                     property:aircraft1 ?aircraft1;
+                     property:aircraft2 ?aircraft2;
                      property:distance ?distanceMeter ;
                      property:time ?time ;
                      property:converging ?converging .
@@ -45,8 +47,10 @@ ex:CollisionShape a sh:NodeShape ;
                  FILTER( ex:close(?icao1, ?icao2, ?lat1, ?lat2, ?long1, ?long2, ?onGround1, ?onGround2) )
                  BIND( (($lat1 - $lat2) * ($lat1 - $lat2) + ($long1 - $long2) * ($long1 - $long2)) AS ?distance )
                  BIND( math:sqrt(?distance) / 0.008 AS ?distanceMeter )
-                 BIND( ex:development(?icao1, ?icao2, ?distanceMeter) AS ?converging )
-                 BIND( uri(concat(str(collision:), str(?icao1), str(?icao2), str(?time))) as ?var )
+                 BIND( uri(concat(str(aircraft:), str(?icao1))) AS ?aircraft1 )
+                 BIND( uri(concat(str(aircraft:), str(?icao2))) AS ?aircraft2 )
+                 BIND( ex:development(?aircraft1, ?aircraft2, ?distanceMeter) AS ?converging )
+                 BIND( uri(concat(str(collision:), str(?icao1), str(?icao2), str(?time))) AS ?var )
 
             }
         """
@@ -58,11 +62,11 @@ ex:development a sh:SPARQLFunction ;
     sh:returnType xsd:boolean ;
     sh:parameter [
         sh:path ex:aircraft1 ;
-        sh:datatype xsd:string ;
+        sh:datatype ex:Aircraft ;
     ] ;
     sh:parameter [
         sh:path ex:aircraft2 ;
-        sh:datatype xsd:string ;
+        sh:datatype ex:Aircraft ;
     ] ;
     sh:parameter [
         sh:path ex:distance ;
@@ -73,7 +77,7 @@ ex:development a sh:SPARQLFunction ;
         PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
         PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
         SELECT (
-            ?dist > $distance   AS ?result
+            ?dist > $distance AS ?result
         )
         WHERE {
             ?collision a ex:Collision ;
@@ -134,7 +138,7 @@ ex:close a sh:SPARQLFunction ;
             && isNumeric($long2)
             && (($lat1 - $lat2) * ($lat1 - $lat2)
                + ($long1 - $long2) * ($long1 - $long2))
-               < 0.0064 AS ?result
+               < 0.0256 AS ?result
         )
         WHERE {}
     """ .

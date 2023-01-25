@@ -26,7 +26,7 @@ ex:NumberFlightsShape a sh:NodeShape ;
                  property:ForOwner ?own2.
             }
             WHERE {
-                 SELECT (COUNT(DISTINCT ?icao) as ?count) ("2" as ?own2) (<http://www.dke.uni-linz.ac.at/pr-dke/owners/2> as ?var)
+                 SELECT (COUNT(DISTINCT ?icao) as ?count) ("Private" as ?own2) (<http://www.dke.uni-linz.ac.at/pr-dke/owners/Private> as ?var)
                      WHERE {
                          ?aFlight a ex:Aircraft ;
                          property:owner ?own ;
@@ -51,7 +51,7 @@ ex:isOwner a sh:SPARQLFunction ;
     sh:select """
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         SELECT (
-            $own = '2'
+            $own = 'Private'
             AS ?result
         )
         WHERE {}
