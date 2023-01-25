@@ -16,10 +16,6 @@ public class App
 
         boolean mockData = askForDataType(scanner);
 
-        String owner = askForOwner(scanner);
-
-        NumberFlightService.getFlightsPerOwner(owner);
-
         double collisionLimit = askForCollisionDistance(scanner);
 
         try {
@@ -58,7 +54,7 @@ public class App
 
     private static void askForNewStates(boolean mockData, double collisionLimit, Scanner scanner)  throws HttpException{
         while(true) {
-            System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \nenter your input: ");
+            System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \no to get the number of flights for an owner \nenter your input: ");
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
@@ -69,6 +65,9 @@ public class App
                 break;
             } else if(input.equals("c")) {
                 collisionLimit = askForCollisionDistance(scanner);
+            } else if(input.equals("o")) {
+                String owner = askForOwner(scanner);
+                NumberFlightService.getFlightsPerOwner(owner);
             } else {
                 System.out.println("Symbol not found");
             }
@@ -85,7 +84,8 @@ public class App
         List<Model> states = stateService.getStates();
 
         checkForCollision(states, collisionLimit);
-        // StorageService.storeStates(states);
+        checkOld(states);
+        StorageService.storeStates(states);
     }
 
     private static double askForCollisionDistance(Scanner scanner) {
@@ -111,5 +111,10 @@ public class App
     private static void checkForCollision(List<Model> states, double collisionLimit) {
         Model collisions = CollisionService.checkForCollisions(states, collisionLimit);
         StorageService.storeCollisionEvents(collisions);
+    }
+
+    private static void checkOld(List<Model> states) {
+        Model expectedPositionsEvents = ExpectedPositionService.checkOld(states);
+        StorageService.storeExpectedPosEvents(expectedPositionsEvents);
     }
 }

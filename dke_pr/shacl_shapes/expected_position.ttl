@@ -1,0 +1,83 @@
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
+@prefix collision: <http://www.dke.uni-linz.ac.at/pr-dke/collision#> .
+@prefix flight: <http://www.dke.uni-linz.ac.at/pr-dke/flight#> .
+@prefix timeStamp: <http://www.dke.uni-linz.ac.at/pr-dke/timeStamp#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:oldShape a sh:NodeShape ;
+    sh:targetClass ex:State ;
+    sh:rule [
+        a sh:SPARQLRule ;
+        sh:prefixes ex:, rdf:, property: ;
+        sh:construct """
+            PREFIX ex: <http://www.w3.org/2022/example#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
+            PREFIX oldstates: <http://www.dke.uni-linz.ac.at/pr-dke/oldstates#>
+            PREFIX math: <http://www.w3.org/2005/xpath-functions/math#>
+            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            CONSTRUCT {
+                  ?var
+                    rdf:type ex:Oldstates ;
+                    property:aircraft ?icao ;
+                    property:timeLastPos ?timeLastPos ;
+                    property:timeLastContact ?timeLastContact ;
+                    property:latitude ?latitude ;
+                    property:longitude ?longitude ;
+                    property:altitudeBaro ?altitudeBaro ;
+                    property:altitudeGeo ?altitudeGeo ;
+                    property:velocity ?velocity ;
+                    property:heading ?heading ;
+                    property:verticalRateShape ?verticalRateShape ;
+                    property:distanceInGrad ?distanceInGrad ;
+                    property:distanceNewPoint ?distance ;
+                    property:expectedlatitude ?newlat ;
+                    property:expectedlongitude ?newlong .
+            }
+            WHERE {
+                $this a ex:State ;
+                    property:icao ?icao ;
+                    property:timeLastPos ?timeLastPos ;
+                    property:timeLastContact ?timeLastContact ;
+                    property:latitude ?latitude ;
+                    property:longitude ?longitude ;
+                    property:altitudeBaro ?altitudeBaro ;
+                    property:altitudeGeo ?altitudeGeo ;
+                    property:velocity ?velocity ;
+                    property:heading ?heading ;
+                    property:verticalRateShape ?verticalRateShape.
+
+                FILTER(?timeLastPos < ?timeLastContact)
+                BIND( ex:timediffrenz(?timeLastContact, ?timeLastPos) AS ?newTime )
+                BIND( (((xsd:double(?timeLastContact) - xsd:double(?timeLastPos))*xsd:double(?velocity))/1000.00) AS ?distance )
+                BIND( (?distance/111.32) AS ?distanceInGrad )
+                BIND( (?longitude + (?distanceInGrad * math:sin(xsd:double(?heading)))) AS ?newlong )
+                BIND( (?latitude + (?distanceInGrad * math:cos(xsd:double(?heading)))) AS ?newlat )
+                BIND( uri(concat(str(oldstates:), str(?icao))) as ?var )
+                }
+            """
+    ] ;
+.
+
+ex:timediffrenz a sh:SPARQLFunction ;
+    sh:returnType xsd:double ;
+    sh:parameter [
+        sh:path ex:time1 ;
+        sh:datatype xsd:double ;
+    ] ;
+    sh:parameter [
+        sh:path ex:time2 ;
+        sh:datatype xsd:double ;
+    ] ;
+    sh:select """
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        SELECT (
+            xsd:double($time1) - xsd:double($time2) AS ?result
+        )
+        WHERE {}
+    """ .

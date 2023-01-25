@@ -138,7 +138,7 @@ ex:close a sh:SPARQLFunction ;
             && isNumeric($long2)
             && (($lat1 - $lat2) * ($lat1 - $lat2)
                + ($long1 - $long2) * ($long1 - $long2))
-               < 0.0144 AS ?result
+               < 0.0256 AS ?result
         )
         WHERE {}
     """ .

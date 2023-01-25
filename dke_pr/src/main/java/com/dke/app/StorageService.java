@@ -5,10 +5,7 @@ import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdfconnection.RDFConnection;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDF;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,6 +15,8 @@ public class StorageService {
     public static final String STATIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/static_graph";
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
     private static final String COLLISION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/collision_graph/";
+
+    private static final String EXPECTED_POSITION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/expected_position/";
 
     public static void storeAircrafts(List<Model> aircrafts) throws HttpException {
         RDFConnection server = RDFConnection.connect(SERVER);
@@ -45,6 +44,13 @@ public class StorageService {
         String time = LocalDateTime.now().toString();
         String link = COLLISION_GRAPH + time;
         storeCollisionGraph(link, time);
+        storeModel(events, link, server);
+    }
+
+    public static void storeExpectedPosEvents(Model events) {
+        RDFConnection server = RDFConnection.connect(SERVER);
+        String time = LocalDateTime.now().toString();
+        String link = EXPECTED_POSITION_GRAPH + time;
         storeModel(events, link, server);
     }
 
