@@ -9,7 +9,7 @@
 @prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:oldShape a sh:NodeShape ;
+ex:expectedPosShape a sh:NodeShape ;
     sh:targetClass ex:State ;
     sh:rule [
         a sh:SPARQLRule ;
@@ -18,24 +18,14 @@ ex:oldShape a sh:NodeShape ;
             PREFIX ex: <http://www.w3.org/2022/example#>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
-            PREFIX oldstates: <http://www.dke.uni-linz.ac.at/pr-dke/oldstates#>
+            PREFIX expectedPosState: <http://www.dke.uni-linz.ac.at/pr-dke/expectedPosState#>
             PREFIX math: <http://www.w3.org/2005/xpath-functions/math#>
             PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             CONSTRUCT {
                   ?var
-                    rdf:type ex:Oldstates ;
+                    rdf:type ex:expectedPosState ;
                     property:aircraft ?icao ;
-                    property:timeLastPos ?timeLastPos ;
                     property:timeLastContact ?timeLastContact ;
-                    property:latitude ?latitude ;
-                    property:longitude ?longitude ;
-                    property:altitudeBaro ?altitudeBaro ;
-                    property:altitudeGeo ?altitudeGeo ;
-                    property:velocity ?velocity ;
-                    property:heading ?heading ;
-                    property:verticalRateShape ?verticalRateShape ;
-                    property:distanceInGrad ?distanceInGrad ;
-                    property:distanceNewPoint ?distance ;
                     property:expectedlatitude ?newlat ;
                     property:expectedlongitude ?newlong .
             }
@@ -58,7 +48,7 @@ ex:oldShape a sh:NodeShape ;
                 BIND( (?distance/111.32) AS ?distanceInGrad )
                 BIND( (?longitude + (?distanceInGrad * math:sin(xsd:double(?heading)))) AS ?newlong )
                 BIND( (?latitude + (?distanceInGrad * math:cos(xsd:double(?heading)))) AS ?newlat )
-                BIND( uri(concat(str(oldstates:), str(?icao))) as ?var )
+                BIND( uri(concat(str(expectedPosState:), str(?icao))) as ?var )
                 }
             """
     ] ;
