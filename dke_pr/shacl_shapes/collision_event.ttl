@@ -1,0 +1,44 @@
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
+@prefix aircraft: <http://www.dke.uni-linz.ac.at/pr-dke/aircraft#> .
+@prefix collision: <http://www.dke.uni-linz.ac.at/pr-dke/collision#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+
+ex:CollisionShape a sh:NodeShape ;
+    sh:targetClass ex:Collision ;
+    sh:clodes true ;
+    sh:property [
+        sh:path rdf:type ;
+    ] ;
+    sh:property [
+        sh:path property:aircraft1 ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType ex:Aircraft ;
+    ] ;
+    sh:property [
+        sh:path property:aircraft2 ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType ex:Aircraft ;
+    ] ;
+    sh:property [
+        sh:path property:distance ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType xsd:float ;
+    ] ;
+    sh:property [
+        sh:path property:time ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:dataType xsd:string ;
+    ] ;
+    sh:property [
+        sh:path property:convering ;
+        sh:maxCount 1 ;
+        sh:dataType ex:boolean ;
+    ] .

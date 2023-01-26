@@ -8,8 +8,11 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.shacl.ShaclValidator;
+import org.apache.jena.shacl.ValidationReport;
 import org.topbraid.shacl.rules.RuleUtil;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,7 +32,11 @@ public class CollisionService {
 
         RDFDataMgr.write(System.out, report, Lang.TTL);
 
-        return report;
+        if(validateCollisionEvents(report)) {
+            return report;
+        } else {
+            return null;
+        }
     }
 
     private static Model getShapeModel(double distance) {
@@ -89,5 +96,17 @@ public class CollisionService {
             QuerySolution solution = results.nextSolution();
             return solution.get("url").toString();
         } else return null;
+    }
+
+    private static boolean validateCollisionEvents(Model events) {
+         System.out.println("starting validation");
+         String SHAPE = "dke_pr/shacl_shapes/collision_event.ttl";
+         Model shapeModel = RDFDataMgr.loadModel(SHAPE);
+         ValidationReport report = ShaclValidator.get().validate(shapeModel.getGraph(), events.getGraph());
+         if (true) {
+             System.out.println("The created events have errors and wont be uploaded");
+             RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
+         }
+         return report.conforms();
     }
 }
