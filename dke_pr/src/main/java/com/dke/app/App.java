@@ -18,6 +18,10 @@ public class App
 
         double collisionLimit = askForCollisionDistance(scanner);
 
+        double velocityChange = askForVelocity(scanner);
+
+        double distanceChange = askForDirectionValue(scanner);
+
         try {
             if(StorageService.checkIfStaticData()) {
                 System.out.println("Static data already got read in continuing with States");
@@ -28,7 +32,7 @@ public class App
                 StorageService.storeAircrafts(aircraft);
                 System.out.println("Static data got stored");
             }
-            askForNewStates(mockData, collisionLimit, scanner);
+            askForNewStates(mockData, collisionLimit, velocityChange, distanceChange, scanner);
         } catch (HttpException e) {
             System.out.println();
             System.out.println("Could not upload to the knowledge graph. Check if the Fuseki Server is running. \nThen restart the application.");
@@ -52,13 +56,13 @@ public class App
     }
 
 
-    private static void askForNewStates(boolean mockData, double collisionLimit, Scanner scanner)  throws HttpException{
+    private static void askForNewStates(boolean mockData, double collisionLimit, double velocityChange, double directionChange, Scanner scanner)  throws HttpException{
         while(true) {
-            System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \no to get the number of flights for an owner \nenter your input: ");
+            System.out.print("Select \nr to read new states \ne to exit \nc to change the collision limit \no to get the number of flights for an owner \ndc to direction check value\nvc to velocity check value \nenter your input: ");
             String input = scanner.nextLine();
             if(input.equals("r")){
                 System.out.println("Reading new states");
-                storeStates(mockData, collisionLimit);
+                storeStates(mockData, collisionLimit, velocityChange, directionChange);
                 System.out.println("New states got stored");
             } else if (input.equals("e")){
                 System.out.println("Exiting the application");
@@ -68,13 +72,17 @@ public class App
             } else if(input.equals("o")) {
                 String owner = askForOwner(scanner);
                 NumberFlightService.getFlightsPerOwner(owner);
+            } else if(input.equals("dc")) {
+                directionChange = askForDirectionValue(scanner);
+            } else if(input.equals("vc")) {
+                velocityChange = askForVelocity(scanner);
             } else {
                 System.out.println("Symbol not found");
             }
         }
     }
 
-    private static void storeStates(boolean mockData, double collisionLimit) throws HttpException{
+    private static void storeStates(boolean mockData, double collisionLimit, double velocityChange, double directionChange) throws HttpException{
         StateService stateService;
         if (mockData) {
             stateService = new MockStates();
@@ -83,8 +91,10 @@ public class App
         }
         List<Model> states = stateService.getStates();
 
-        checkForCollision(states, collisionLimit);
-        checkOld(states);
+        // checkForCollision(states, collisionLimit);
+        // checkOld(states);
+        checkForVelocity(states, velocityChange);
+        checkForDirection(states, directionChange);
         StorageService.storeStates(states);
     }
 
@@ -116,5 +126,45 @@ public class App
     private static void checkOld(List<Model> states) {
         Model expectedPositionsEvents = ExpectedPositionService.checkOld(states);
         StorageService.storeExpectedPosEvents(expectedPositionsEvents);
+    }
+
+    private static double askForVelocity(Scanner scanner) {
+        double velocity = 0;
+        while(true) {
+            System.out.print("Enter under which velocity value should be given out: ");
+            String input = scanner.nextLine();
+            try {
+                velocity = Double.parseDouble(input);
+                break;
+            } catch (Exception e) {
+                System.out.println("Please type in a valid value in the double format!");
+            }
+        }
+        return velocity;
+    }
+
+    private static double askForDirectionValue(Scanner scanner) {
+        double distance = 0;
+        while(true) {
+            System.out.print("Enter under which distance value should be given out: ");
+            String input = scanner.nextLine();
+            try {
+                distance = Double.parseDouble(input);
+                break;
+            } catch (Exception e) {
+                System.out.println("Please type in a valid value in the double format!");
+            }
+        }
+        return distance;
+    }
+
+    private static void checkForVelocity(List<Model> states, double velocityChange) {
+        Model velocity = VelocityChangeService.checkForVelocityChanges(states, velocityChange);
+        StorageService.storeVelocityEvents(velocity);
+    }
+
+    private static void checkForDirection(List<Model> states, double directionChange) {
+        Model direction = DirectionChangeService.checkForDirectionChanges(states, directionChange);
+        StorageService.storeDirectionEvents(direction);
     }
 }

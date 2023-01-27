@@ -1,0 +1,50 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
+@prefix velocityChange: <http://www.dke.uni-linz.ac.at/pr-dke/velocityChange#> .
+@prefix timeStamp: <http://www.dke.uni-linz.ac.at/pr-dke/timeStamp#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:VelocityChangeShape a sh:NodeShape ;
+       sh:targetClass ex:State ;
+       sh:rule [
+             a sh:SPARQLRule ;
+             sh:prefixes ex:, rdf:, property: ;
+             sh:construct """
+                PREFIX ex: <http://www.w3.org/2022/example#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
+                PREFIX velocityChange: <http://www.dke.uni-linz.ac.at/pr-dke/velocityChange#>
+                PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                CONSTRUCT {
+                    ?velocityChangeEvent
+                        rdf:type ex:VelocityChange ;
+                        property:velocity1 ?timeLastPos1 ;
+                        property:velocity2 ?timeLastPos2 ;
+                        property:velocityChange ?velocityChangeValue ;
+                        property:interpretation ?interpretation ;
+                        property:aircraftChangedId ?icao1 .
+                } WHERE {
+                    $this a ex:State ;
+                        property:velocity ?velocity1 ;
+                        property:icao ?icao1 ;
+                        property:timeLastPos ?timeLastPos1 .
+                    ?otherState a ex:State ;
+                        property:velocity ?velocity2 ;
+                        property:icao ?icao2 ;
+                        property:timeLastPos ?timeLastPos2 .
+                    FILTER(?icao1 = ?icao2
+                        && isNumeric(xsd:float(?velocity1))
+                        && isNumeric(xsd:float(?velocity2))
+                        && ?timeLastPos1 > ?timeLastPos2
+                        && ?velocityChangeValue * ?velocityChangeValue > 0)
+                            BIND((xsd:float($velocity1) - xsd:float($velocity2)) as ?velocityChangeValue)
+                            BIND( IF(?velocity1 > ?velocity2, "Slowdown", "Acceleration") as ?interpretation )
+                            BIND( uri(concat(str(velocityChange:), str(?icao1), str(?icao2), str(?timeLastPos2))) as ?velocityChangeEvent )
+                }
+            """
+     ]
+.

@@ -1,0 +1,51 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.w3.org/2022/example#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix state: <http://www.dke.uni-linz.ac.at/pr-dke/state#> .
+@prefix headingChange: <http://www.dke.uni-linz.ac.at/pr-dke/HeadingChange#> .
+@prefix timeStamp: <http://www.dke.uni-linz.ac.at/pr-dke/timeStamp#> .
+@prefix property: <http://www.dke.uni-linz.ac.at/pr-dke/property#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:HeadingChangeShape a sh:NodeShape ;
+      sh:targetClass ex:State ;
+      sh:rule [
+            a sh:SPARQLRule ;
+            sh:prefixes ex:, rdf:, property: ;
+            sh:construct """
+                    PREFIX ex: <http://www.w3.org/2022/example#>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX property: <http://www.dke.uni-linz.ac.at/pr-dke/property#>
+                    PREFIX headingChange: <http://www.dke.uni-linz.ac.at/pr-dke/HeadingChange#>
+                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                    CONSTRUCT {
+                         ?headingChangeEvent
+                             rdf:type ex:HeadingChange ;
+                             property:heading1 ?latitude1 ;
+                             property:heading2 ?latitude2 ;
+                             property:headingChange ?headingChangeValue ;
+                             property:interpretation ?interpretation ;
+                             property:aircraftChangedId ?icao1 .
+                    }
+                    WHERE {
+                        $this a ex:State ;
+                            property:heading ?heading1 ;
+                            property:icao ?icao1 ;
+                            property:latitude ?latitude1 .
+                        ?otherState a ex:State ;
+                            property:heading ?heading2 ;
+                            property:icao ?icao2 ;
+                            property:latitude ?latitude2 .
+                        FILTER(?icao1 = ?icao2
+                            && isNumeric(xsd:float(?heading1))
+                            && isNumeric(xsd:float(?heading2))
+                            && ?latitude1 > ?latitude2
+                            && ?headingChangeValue * ?headingChangeValue > 0)
+                                BIND((xsd:float($heading1) - xsd:float($heading2)) as ?headingChangeValue )
+                                BIND( IF(?heading1 > ?heading2, "North", "South") as ?interpretation )
+                                BIND( uri(concat(str(headingChange:), str(?icao1), str(?icao2), str(?latitude2))) as ?headingChangeEvent )
+                    }
+            """
+    ];
+.
