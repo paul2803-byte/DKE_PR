@@ -15,6 +15,8 @@ public class StorageService {
     public static final String STATIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/static_graph";
     private static final String DYNAMIC_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/dynamic_graph/";
     private static final String COLLISION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/collision_graph/";
+    private static final String VELOCITY_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/velocity_graph/";
+    private static final String DIRECTION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/direction_graph/";
 
     private static final String EXPECTED_POSITION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/expected_position/";
 
@@ -37,6 +39,7 @@ public class StorageService {
             pb.step();
         });
         pb.close();
+        storeStateGraph(dynamicLink, String.valueOf(LocalDateTime.now()));
     }
 
     public static void storeCollisionEvents(Model events) {
@@ -72,6 +75,30 @@ public class StorageService {
                 .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"CollisionGraph"))
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"time"), time)
                 .addProperty(model.createProperty(RDFService.PROPERTY_URL+"url"), url);
+        RDFConnection server = RDFConnection.connect(SERVER);
+        server.load(model);
+    }
+
+    public static void storeVelocityEvents(Model events) {
+        RDFConnection server = RDFConnection.connect(SERVER);
+        String time = LocalDateTime.now().toString();
+        String link = VELOCITY_GRAPH + time;
+        storeModel(events, link, server);
+    }
+
+    public static void storeDirectionEvents(Model events) {
+        RDFConnection server = RDFConnection.connect(SERVER);
+        String time = LocalDateTime.now().toString();
+        String link = DIRECTION_GRAPH + time;
+        storeModel(events, link, server);
+    }
+
+    private static void storeStateGraph(String link, String time) {
+        Model model = ModelFactory.createDefaultModel();
+        model.createResource(link)
+                .addProperty(RDF.type, model.createProperty(RDFService.EX_URL+"StateGraph"))
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"time"), time)
+                .addProperty(model.createProperty(RDFService.PROPERTY_URL+"url"), link);
         RDFConnection server = RDFConnection.connect(SERVER);
         server.load(model);
     }

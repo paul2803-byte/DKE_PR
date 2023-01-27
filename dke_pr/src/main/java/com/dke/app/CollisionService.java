@@ -103,7 +103,7 @@ public class CollisionService {
          String SHAPE = "dke_pr/shacl_shapes/collision_event.ttl";
          Model shapeModel = RDFDataMgr.loadModel(SHAPE);
          ValidationReport report = ShaclValidator.get().validate(shapeModel.getGraph(), events.getGraph());
-         if (true) {
+         if (!report.conforms()) {
              System.out.println("The created events have errors and wont be uploaded");
              RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
          }
