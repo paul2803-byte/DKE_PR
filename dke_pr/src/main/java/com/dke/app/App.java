@@ -71,7 +71,8 @@ public class App
                 collisionLimit = askForCollisionDistance(scanner);
             } else if(input.equals("o")) {
                 String owner = askForOwner(scanner);
-                NumberFlightService.getFlightsPerOwner(owner);
+                /*Model numberOfAircrafts =*/NumberFlightService.getFlightsPerOwner(owner);
+                //StorageService.storeNumberAircraftsAggregation(numberOfAircrafts);
             } else if(input.equals("dc")) {
                 directionChange = askForDirectionValue(scanner);
             } else if(input.equals("vc")) {
