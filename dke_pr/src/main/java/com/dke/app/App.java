@@ -71,8 +71,8 @@ public class App
                 collisionLimit = askForCollisionDistance(scanner);
             } else if(input.equals("o")) {
                 String owner = askForOwner(scanner);
-                /*Model numberOfAircrafts =*/NumberFlightService.getFlightsPerOwner(owner);
-                //StorageService.storeNumberAircraftsAggregation(numberOfAircrafts);
+                Model numberOfAircrafts = NumberFlightService.getFlightsPerOwner(owner);
+                StorageService.storeNumberAircraftsAggregation(numberOfAircrafts);
             } else if(input.equals("dc")) {
                 directionChange = askForDirectionValue(scanner);
             } else if(input.equals("vc")) {
@@ -92,8 +92,8 @@ public class App
         }
         List<Model> states = stateService.getStates();
 
-        // checkForCollision(states, collisionLimit);
-        // checkOld(states);
+        checkForCollision(states, collisionLimit);
+        checkOld(states);
         checkForVelocity(states, velocityChange);
         checkForDirection(states, directionChange);
         StorageService.storeStates(states);

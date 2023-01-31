@@ -45,7 +45,9 @@ ex:CollisionShape a sh:NodeShape ;
                  ?timeStamp a ex:TimeStamp ;
                      property:time ?time .
                  FILTER( ex:close(?icao1, ?icao2, ?lat1, ?lat2, ?long1, ?long2, ?onGround1, ?onGround2) )
-                 BIND( (($lat1 - $lat2) * ($lat1 - $lat2) + ($long1 - $long2) * ($long1 - $long2)) AS ?distance )
+                 BIND( (($lat1 - $lat2) * ($lat1 - $lat2) +
+                    ($long1 - $long2) * ($long1 - $long2))
+                    AS ?distance )
                  BIND( math:sqrt(?distance) / 0.008 AS ?distanceMeter )
                  BIND( uri(concat(str(aircraft:), str(?icao1))) AS ?aircraft1 )
                  BIND( uri(concat(str(aircraft:), str(?icao2))) AS ?aircraft2 )
