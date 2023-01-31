@@ -17,7 +17,7 @@ public class StorageService {
     private static final String COLLISION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/collision_graph/";
     private static final String VELOCITY_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/velocity_graph/";
     private static final String DIRECTION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/direction_graph/";
-    //private static final String AGGREGATION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/aggregation_graph/";
+    private static final String AGGREGATION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/aggregation_graph/";
 
     private static final String EXPECTED_POSITION_GRAPH = "http://www.dke.uni-linz.ac.at/pr-dke/expected_position/";
 
@@ -88,12 +88,12 @@ public class StorageService {
     }
 
 
-   /* public static void storeNumberAircraftsAggregation(Model number) {
+   public static void storeNumberAircraftsAggregation(Model number) {
         RDFConnection server = RDFConnection.connect(SERVER);
         String time = LocalDateTime.now().toString();
         String link = AGGREGATION_GRAPH + time;
         storeModel(number, link, server);
-    } */
+    }
 
 
     public static void storeDirectionEvents(Model events) {
